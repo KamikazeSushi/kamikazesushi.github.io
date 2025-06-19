@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Organisationslehre MC-Test</title>
+    <style>
+        body {
+        font-family: 'Segoe UI', sans-serif;
+        background: #f9f9f9;
+        color: #333;
+        margin: 0;
+        padding: 20px;
+        }
+    
+        h1 {
+        text-align: center;
+        margin-bottom: 30px;
+        color: #2c3e50;
+        }
+    
+        .question {
+        background: #fff;
+        border-radius: 8px;
+        padding: 15px 20px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+        }
+    
+        .question h4 {
+        margin: 0 0 10px;
+        color: #34495e;
+        }
+    
+        .option {
+        margin: 5px 0 5px 15px;
+        }
+    
+        #submit {
+        display: block;
+        margin: 30px auto;
+        background-color: #3498db;
+        color: white;
+        font-size: 18px;
+        border: none;
+        padding: 12px 30px;
+        border-radius: 6px;
+        cursor: pointer;
+        }
+    
+        #submit:hover {
+        background-color: #2980b9;
+        }
+    
+        #results {
+        margin-top: 40px;
+        }
+    
+        .correct {
+        background: #e9fce9;
+        border-left: 5px solid #2ecc71;
+        padding: 10px;
+        margin-bottom: 15px;
+        border-radius: 5px;
+        }
+    
+        .incorrect {
+        background: #fdecea;
+        border-left: 5px solid #e74c3c;
+        padding: 10px;
+        margin-bottom: 15px;
+        border-radius: 5px;
+        }
+    
+        .correct strong,
+        .incorrect strong {
+        color: #2c3e50;
+        }
+    
+        h2, h3 {
+        text-align: center;
+        color: #2c3e50;
+        }
+    </style>
+</head>
+<body>
+  <h1>Organisationslehre MC-Test</h1>
+  <form id="quizForm">
+    <div id="questions"></div>
+    <button type="submit" id="submit">Abgeben</button>
+  </form>
+  <div id="results"></div>
+
+  <script>
+    // Fragen in JSON
+    const questions = [
+      {"id": 1, "question": "Welche Herausforderung ergibt sich aus der Arbeitsteilung in innovativen Unternehmen wie NVIDIA?", "options": ["Übermäßige Standardisierung", "Koordinationsaufwand zwischen Teams", "Reduzierte Hierarchieebenen", "Geringe Spezialisierung"], "correct": "b"},
+      {"id": 2, "question": "Wie könnte NVIDIA „Information ist Macht“ nutzen, um Wettbewerbsvorteile zu sichern?", "options": ["Durch zentralisierte Datenkontrolle", "Durch bürokratische Prozesse", "Durch transparente Wissensverteilung in agilen Teams", "Durch isolierte Abteilungen"], "correct": "c"},
+      {"id": 3, "question": "Warum kann das Bürokratiemodell nach Weber in dynamischen Märkten wie dem von NVIDIA ineffizient sein?", "options": ["Es fördert schnelle Entscheidungen", "Es betont Regeltreue über Flexibilität", "Es minimiert Dokumentation", "Es unterstützt flache Hierarchien"], "correct": "b"},
+      {"id": 4, "question": "Wie unterscheidet sich Scientific Management von modernen agilen Ansätzen, wie sie NVIDIA nutzt?", "options": ["Agile Ansätze betonen Mitarbeiterautonomie, Taylor nicht", "Beide priorisieren strikte Hierarchien", "Taylor fördert iterative Prozesse", "Agile Ansätze vermeiden Arbeitsteilung"], "correct": "a"},
+      {"id": 5, "question": "Welches Risiko birgt eine breite Leitungsspanne, wie sie NVIDIA mit 60 Direct Reports nutzt?", "options": ["Übermäßige Kontrolle durch Führungskräfte", "Zentralisierte Entscheidungsfindung", "Informationsverlust durch Überlastung", "Geringe Mitarbeiterautonomie"], "correct": "c"},
+      {"id": 6, "question": "Wie könnte NVIDIA die Ablauforganisation für die GPU-Entwicklung optimieren?", "options": ["Durch zentralisierte Planung ohne Teaminput", "Durch strikte Hierarchien", "Durch standardisierte Prozesse mit Teamfeedback", "Durch isolierte Abteilungen"], "correct": "c"},
+      {"id": 7, "question": "Was ist ein Nachteil der Matrixorganisation im Vergleich zur Stablinienorganisation?", "options": ["Klare Hierarchie", "Geringe Spezialisierung", "Doppelte Berichtspflichten", "Minimierte Koordination"], "correct": "c"},
+      {"id": 8, "question": "Welches Prinzip des KVP könnte NVIDIA bei der KI-Entwicklung anwenden?", "options": ["Einmalige Prozessoptimierung", "Zentralisierte Entscheidungsfindung", "Kontinuierliche Verbesserung durch Mitarbeiterinput", "Minimierung von Dokumentation"], "correct": "c"},
+      {"id": 9, "question": "Wie könnte Jensen Huang ethische Führung bei NVIDIA umsetzen?", "options": ["Durch strikte Hierarchien", "Durch zentralisierte Kontrolle", "Durch Förderung von Transparenz und Diversität", "Durch Minimierung von Kommunikation"], "correct": "c"},
+      {"id": 10, "question": "Was ist ein Vorteil des TQM im Vergleich zum KVP?", "options": ["Fokus auf einmalige Prozesse", "Betonung der Kundenorientierung", "Minimierung von Mitarbeiterbeteiligung", "Reduzierung von Qualitätskontrollen"], "correct": "b"},
+      {"id": 11, "question": "Welches UML-Diagramm ist für die Analyse von Prozessdynamiken bei NVIDIA am besten geeignet?", "options": ["Klassendiagramm", "Zustandsdiagramm", "Aktivitätsdiagramm", "Komponentendiagramm"], "correct": "c"},
+      {"id": 12, "question": "Wie könnte NVIDIA UML nutzen, um die GPU-Entwicklung zu verbessern?", "options": ["Durch Dokumentation von Hierarchien", "Durch Analyse von Kostenstellen", "Durch Modellierung von Entwicklungsprozessen", "Durch Bewertung von Rechtsformen"], "correct": "c"},
+      {"id": 13, "question": "Welches Kriterium ist bei der Aufgabenanalyse für komplexe Projekte wie NVIDIAs KI-Entwicklung entscheidend?", "options": ["Minimierung von Teilaufgaben", "Zentralisierte Planung", "Abhängigkeiten zwischen Teilaufgaben", "Reduzierte Spezialisierung"], "correct": "c"},
+      {"id": 14, "question": "Warum ist die Werkstattfertigung für NVIDIAs Prototypenentwicklung geeignet?", "options": ["Hohe Standardisierung", "Geringe Flexibilität", "Anpassungsfähigkeit an Einzelprojekte", "Maximierte Effizienz"], "correct": "c"},
+      {"id": 15, "question": "Wie könnte NVIDIA die Maßzahlen-Matrix für die Teamzuordnung optimieren?", "options": ["Durch zentralisierte Kontrolle", "Durch Minimierung von Kriterien", "Durch Gewichtung von Nähe und Kompetenz", "Durch isolierte Abteilungen"], "correct": "c"},
+      {"id": 16, "question": "Welches Problem löst die numerische Organisationsentwicklung in der Fallstudie „Trockenblumensträuße“?", "options": ["Kostenstellenanalyse", "Rechtsformenwahl", "Optimierung der Aufgabenverteilung", "Prozessmodellierung"], "correct": "c"},
+      {"id": 17, "question": "Welcher Faktor beeinflusst die Wahl zwischen Versandhandel und Ladenverkauf in der Fallstudie „Trockenblumensträuße“?", "options": ["Hierarchieebenen", "Kundenreichweite", "Fertigungstyp", "Dokumentation"], "correct": "b"},
+      {"id": 18, "question": "Welches Modell beschreibt den Wandel bei NVIDIA zum KI-Marktführer?", "options": ["Bürokratiemodell", "Lewins Unfreeze-Change-Refreeze", "Zentralisierte Planung", "Scientific Management"], "correct": "b"},
+      {"id": 19, "question": "Welche Herausforderung tritt bei der Organisationsentwicklung häufig auf?", "options": ["Übermäßige Flexibilität", "Mitarbeiterwiderstand gegen Veränderungen", "Geringe Dokumentation", "Minimierte Kommunikation"], "correct": "b"},
+      {"id": 20, "question": "Welche Rechtsform ist für NVIDIA aufgrund der globalen Expansion am geeignetsten?", "options": ["Einzelunternehmen", "OHG", "AG", "GbR"], "correct": "c"},
+      {"id": 21, "question": "Was ist ein Nachteil der GmbH im Vergleich zur AG?", "options": ["Beschränkte Haftung", "Geringere Kapitalbeschaffungsmöglichkeiten", "Höhere Flexibilität", "Minimierte Hierarchie"], "correct": "b"},
+      {"id": 22, "question": "Wie unterstützt Mitbestimmung die Organisationsentwicklung?", "options": ["Durch zentralisierte Kontrolle", "Durch Förderung von Mitarbeiterengagement", "Durch Minimierung von Kommunikation", "Durch strikte Hierarchien"], "correct": "b"},
+      {"id": 23, "question": "Welches Problem könnte NVIDIA beim Einsatz des Betriebsabrechnungsbogens lösen?", "options": ["Dokumentation von Hierarchien", "Optimierung von Prozessen", "Zuordnung von Forschungs- und Entwicklungskosten", "Rechtsformenanalyse"], "correct": "c"},
+      {"id": 24, "question": "Was ist ein Vorteil des Betriebsabrechnungsbogens?", "options": ["Minimierung von Kosten", "Transparente Kostenverteilung", "Zentralisierte Planung", "Reduzierte Dokumentation"], "correct": "b"},
+      {"id": 25, "question": "Welches Prinzip des Scrum-Frameworks könnte NVIDIA für die KI-Entwicklung nutzen?", "options": ["Zentralisierte Kontrolle", "Langfristige Planung", "Iterative Sprints mit Feedback", "Minimierte Teamautonomie"], "correct": "c"},
+      {"id": 26, "question": "Was ist ein Nachteil agiler Methoden in großen Organisationen wie NVIDIA?", "options": ["Hohe Flexibilität", "Koordinationsaufwand zwischen Teams", "Geringe Mitarbeiterbeteiligung", "Standardisierte Prozesse"], "correct": "b"},
+      {"id": 27, "question": "Wie unterscheidet sich Kanban von Scrum in der Organisationssteuerung?", "options": ["Scrum betont feste Sprints, Kanban kontinuierlichen Fluss", "Kanban nutzt feste Hierarchien", "Scrum minimiert Visualisierung", "Beide vermeiden Mitarbeiterfeedback"], "correct": "a"},
+      {"id": 28, "question": "Welches Risiko birgt die Digitalisierung bei NVIDIA?", "options": ["Übermäßige Standardisierung", "Abhängigkeit von IT-Systemen", "Geringe Mitarbeiterqualifikation", "Minimierte Kommunikation"], "correct": "b"},
+      {"id": 29, "question": "Wie könnte NVIDIA das MVC-Schema in der Softwareentwicklung einsetzen?", "options": ["Zur Optimierung von Kostenstellen", "Zur Dokumentation von Hierarchien", "Zur Trennung von Logik und Präsentation", "Zur Rechtsformenanalyse"], "correct": "c"},
+      {"id": 30, "question": "Welche Technologie unterstützt NVIDIAs digitale Transformation?", "options": ["Bürokratiesoftware", "Cloud-Computing", "Zentralisierte Datenbanken", "Manuelle Prozesse"], "correct": "b"},
+      {"id": 31, "question": "Was ist ein kritischer Erfolgsfaktor für NVIDIAs Digitalisierung?", "options": ["Minimierung von IT-Investitionen", "Mitarbeiterqualifizierung und Kulturwandel", "Zentralisierte Kontrolle", "Bürokratische Prozesse"], "correct": "b"},
+      {"id": 32, "question": "Welches Tool könnte NVIDIA für die Prozessautomatisierung nutzen?", "options": ["UML-Diagramme", "Betriebsabrechnungsbogen", "Robotic Process Automation (RPA)", "Hierarchiediagramme"], "correct": "c"},
+      {"id": 33, "question": "Wie unterstützt NVIDIAs flache Hierarchie die digitale Transformation?", "options": ["Durch zentralisierte Kontrolle", "Durch strikte Prozesse", "Durch schnelle Entscheidungswege und Teamautonomie", "Durch isolierte Abteilungen"], "correct": "c"}
+    ];
+
+    // Lösungen in JSON
+    const solutions = {
+      "1": {"correct": "b", "explanation": "Arbeitsteilung erfordert hohen Koordinationsaufwand in innovativen Unternehmen (S. 7)."},
+      "2": {"correct": "c", "explanation": "Transparente Wissensverteilung fördert Innovation bei NVIDIA (Web:23)."},
+      "3": {"correct": "b", "explanation": "Regeltreue behindert Flexibilität in dynamischen Märkten (S. 11)."},
+      "4": {"correct": "a", "explanation": "Agile Ansätze fördern Autonomie, Scientific Management nicht (S. 12, Web:7)."},
+      "5": {"correct": "c", "explanation": "Breite Leitungsspannen riskieren Informationsverlust (S. 71, Web:21)."},
+      "6": {"correct": "c", "explanation": "Standardisierte Prozesse mit Feedback optimieren Abläufe (S. 18, Web:1)."},
+      "7": {"correct": "c", "explanation": "Matrixorganisationen haben doppelte Berichtspflichten (S. 22)."},
+      "8": {"correct": "c", "explanation": "KVP betont kontinuierliche Verbesserung mit Mitarbeiterinput (S. 33)."},
+      "9": {"correct": "c", "explanation": "Ethische Führung fördert Transparenz und Diversität (S. 44, Web:20)."},
+      "10": {"correct": "b", "explanation": "TQM betont Kundenorientierung stärker als KVP (S. 35)."},
+      "11": {"correct": "c", "explanation": "Aktivitätsdiagramme analysieren Prozessdynamiken (S. 49)."},
+      "12": {"correct": "c", "explanation": "UML modelliert Entwicklungsprozesse bei NVIDIA (S. 48, Web:1)."},
+      "13": {"correct": "c", "explanation": "Abhängigkeiten sind bei komplexen Projekten entscheidend (S. 55)."},
+      "14": {"correct": "c", "explanation": "Werkstattfertigung bietet Flexibilität für Prototypen (S. 59)."},
+      "15": {"correct": "c", "explanation": "Gewichtete Kriterien optimieren Teamzuordnung (S. 81)."},
+      "16": {"correct": "c", "explanation": "Numerische Entwicklung optimiert Aufgabenverteilung (S. 83)."},
+      "17": {"correct": "b", "explanation": "Kundenreichweite beeinflusst die Wahl in der Fallstudie (S. 84)."},
+      "18": {"correct": "b", "explanation": "Lewins Modell beschreibt NVIDIAs Wandel (S. 87)."},
+      "19": {"correct": "b", "explanation": "Mitarbeiterwiderstand ist eine häufige Herausforderung (S. 86)."},
+      "20": {"correct": "c", "explanation": "AG ist für globale Expansion geeignet (S. 97, Web:2)."},
+      "21": {"correct": "b", "explanation": "GmbH hat geringere Kapitalbeschaffungsmöglichkeiten (S. 98)."},
+      "22": {"correct": "b", "explanation": "Mitbestimmung fördert Engagement (S. 100)."},
+      "23": {"correct": "c", "explanation": "Betriebsabrechnungsbogen ordnet F&E-Kosten zu (S. 106, Web:9)."},
+      "24": {"correct": "b", "explanation": "Betriebsabrechnungsbogen sorgt für Transparenz (S. 106)."},
+      "25": {"correct": "c", "explanation": "Scrum nutzt iterative Sprints mit Feedback (S. 117, Web:7)."},
+      "26": {"correct": "b", "explanation": "Agile Methoden erfordern hohen Koordinationsaufwand (S. 117)."},
+      "27": {"correct": "a", "explanation": "Kanban betont kontinuierlichen Fluss, Scrum feste Sprints (S. 118)."},
+      "28": {"correct": "b", "explanation": "Digitalisierung birgt IT-Abhängigkeit (S. 130)."},
+      "29": {"correct": "c", "explanation": "MVC trennt Logik und Präsentation (S. 147)."},
+      "30": {"correct": "b", "explanation": "Cloud-Computing unterstützt Digitalisierung (S. 129, Web:23)."},
+      "31": {"correct": "b", "explanation": "Mitarbeiterqualifizierung ist entscheidend (S. 151)."},
+      "32": {"correct": "c", "explanation": "RPA automatisiert Prozesse (S. 132)."},
+      "33": {"correct": "c", "explanation": "Flache Hierarchien fördern schnelle Entscheidungen (S. 151, Web:21)."}
+    };
+
+    // Fragen rendern
+    const questionsDiv = document.getElementById('questions');
+    questions.forEach(q => {
+      const div = document.createElement('div');
+      div.className = 'question';
+      div.innerHTML = `<h4>${q.id}. ${q.question}</h4>`;
+      q.options.forEach((opt, idx) => {
+        const optDiv = document.createElement('div');
+        optDiv.className = 'option';
+        optDiv.innerHTML = `
+          <label>
+            <input type="radio" name="q${q.id}" value="${String.fromCharCode(97 + idx)}">
+            ${opt}
+          </label>
+        `;
+        div.appendChild(optDiv);
+      });
+      questionsDiv.appendChild(div);
+    });
+
+    document.getElementById('quizForm').addEventListener('submit', e => {
+      e.preventDefault();
+      const answers = {};
+      questions.forEach(q => {
+        const selected = document.querySelector(`input[name="q${q.id}"]:checked`);
+        answers[q.id] = selected ? selected.value : null;
+      });
+      displayResults(answers);
+    });
+
+    function displayResults(answers) {
+      const resultsDiv = document.getElementById('results');
+      resultsDiv.innerHTML = '<h2>Ergebnisse</h2>';
+      let score = 0;
+
+      questions.forEach(q => {
+        const userAnswer = answers[q.id];
+        const correctAnswer = solutions[q.id].correct;
+        const explanation = solutions[q.id].explanation;
+        const resultDiv = document.createElement('div');
+
+        if (userAnswer === correctAnswer) {
+          resultDiv.className = 'correct';
+          score++;
+        } else {
+          resultDiv.className = 'incorrect';
+        }
+
+        resultDiv.innerHTML = `
+          <strong>Frage ${q.id}:</strong> ${q.question}<br>
+          <strong>Ihre Antwort:</strong> ${userAnswer ? q.options[userAnswer.charCodeAt(0) - 97] : 'Keine'}<br>
+          <strong>Korrekte Antwort:</strong> ${q.options[correctAnswer.charCodeAt(0) - 97]}<br>
+          <strong>Erklärung:</strong> ${explanation}<br><br>
+        `;
+
+        resultsDiv.appendChild(resultDiv);
+      });
+
+      resultsDiv.insertAdjacentHTML('beforeend', `<h3>Gesamtpunktzahl: ${score}/${questions.length}</h3>`);
+    }
+  </script>
+</body>
+</html>
