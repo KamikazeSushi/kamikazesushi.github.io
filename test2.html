@@ -2,229 +2,194 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <title>Organisationslehre MC-Test</title>
+    <title>Organisationslehre & NVIDIA MC-Test</title>
     <style>
         body {
-        font-family: 'Segoe UI', sans-serif;
-        background: #f9f9f9;
-        color: #333;
-        margin: 0;
-        padding: 20px;
+            font-family: "Segoe UI", sans-serif;
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 20px;
+            background: #f5f7fa;
+            color: #333;
         }
-    
         h1 {
-        text-align: center;
-        margin-bottom: 30px;
-        color: #2c3e50;
+            text-align: center;
+            color: #004080;
         }
-    
         .question {
-        background: #fff;
-        border-radius: 8px;
-        padding: 15px 20px;
-        margin-bottom: 20px;
-        box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+            background: white;
+            border: 1px solid #ddd;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
         }
-    
-        .question h4 {
-        margin: 0 0 10px;
-        color: #34495e;
-        }
-    
-        .option {
-        margin: 5px 0 5px 15px;
-        }
-    
+        .option { margin: 5px 0; }
+        .option label { cursor: pointer; }
+        .option input { margin-right: 8px; }
         #submit {
-        display: block;
-        margin: 30px auto;
-        background-color: #3498db;
-        color: white;
-        font-size: 18px;
-        border: none;
-        padding: 12px 30px;
-        border-radius: 6px;
-        cursor: pointer;
+            display: block;
+            margin: 30px auto;
+            padding: 12px 30px;
+            font-size: 16px;
+            background-color: #004080;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
         }
-    
-        #submit:hover {
-        background-color: #2980b9;
-        }
-    
         #results {
-        margin-top: 40px;
+            margin-top: 30px;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
         }
-    
-        .correct {
-        background: #e9fce9;
-        border-left: 5px solid #2ecc71;
-        padding: 10px;
-        margin-bottom: 15px;
-        border-radius: 5px;
-        }
-    
-        .incorrect {
-        background: #fdecea;
-        border-left: 5px solid #e74c3c;
-        padding: 10px;
-        margin-bottom: 15px;
-        border-radius: 5px;
-        }
-    
-        .correct strong,
-        .incorrect strong {
-        color: #2c3e50;
-        }
-    
-        h2, h3 {
-        text-align: center;
-        color: #2c3e50;
-        }
+        .correct { color: green; }
+        .incorrect { color: red; }
     </style>
 </head>
 <body>
-  <h1>Organisationslehre MC-Test</h1>
-  <form id="quizForm">
-    <div id="questions"></div>
-    <button type="submit" id="submit">Abgeben</button>
-  </form>
-  <div id="results"></div>
+    <h1>Organisationslehre & NVIDIA MC-Test (33 Fragen)</h1>
+    <form id="quizForm">
+        <div id="questions"></div>
+        <button type="submit" id="submit">Abgeben</button>
+    </form>
+    <div id="results"></div>
 
-  <script>
-    // Fragen in JSON
-    const questions = [
-      {"id": 1, "question": "Was ist das Hauptziel der Organisationslehre?", "options": ["Entwicklung von Marketingstrategien", "Gestaltung effizienter Arbeitsteilung", "Optimierung von Finanzflüssen", "Einhaltung von Umweltstandards"], "correct": "b"},
-      {"id": 2, "question": "Welche Art der Arbeitsteilung betont die Spezialisierung auf unterschiedliche Aufgaben?", "options": ["Mengenteilung", "Artteilung", "Ablauforganisation", "Aufbauorganisation"], "correct": "b"},
-      {"id": 3, "question": "Wie könnte NVIDIA das Konzept „Information ist Macht“ in der Arbeitsteilung nutzen?", "options": ["Durch zentralisierte Datenkontrolle", "Durch transparente Kommunikation in Teams", "Durch bürokratische Hierarchien", "Durch isolierte Abteilungen"], "correct": "b"},
-      {"id": 4, "question": "Welches Prinzip ist zentral für das Bürokratiemodell nach Weber?", "options": ["Flexibilität in der Entscheidungsfindung", "Regeltreue und Nachvollziehbarkeit", "Minimierung der Dokumentation", "Flache Hierarchien"], "correct": "b"},
-      {"id": 5, "question": "Was ist ein Merkmal des Scientific Management nach Taylor?", "options": ["Fokus auf Mitarbeiterautonomie", "Trennung von Planung und Ausführung", "Vermeidung von Arbeitsteilung", "Flexible Prozesse"], "correct": "b"},
-      {"id": 6, "question": "Warum bevorzugt NVIDIA eine flache Hierarchie gegenüber dem Bürokratiemodell?", "options": ["Um Regeltreue zu gewährleisten", "Um schnelle Entscheidungen zu ermöglichen", "Um Dokumentation zu maximieren", "Um Hierarchieebenen zu erhöhen"], "correct": "b"},
-      {"id": 7, "question": "Was definiert die Ablauforganisation?", "options": ["Hierarchische Strukturen", "Zeitliche und räumliche Abfolge von Prozessen", "Kostenstellenanalyse", "Rechtsformenwahl"], "correct": "b"},
-      {"id": 8, "question": "Welches System kombiniert klare Hierarchie mit funktionaler Spezialisierung?", "options": ["Mehrliniensystem", "Stablinienorganisation", "Projektorganisation", "Matrixorganisation"], "correct": "b"},
-      {"id": 9, "question": "Wie könnte NVIDIA die Aufbauorganisation gestalten?", "options": ["Durch strikte Hierarchien wie im Einliniensystem", "Durch flache Strukturen mit breiter Leitungsspanne", "Durch isolierte Abteilungen", "Durch zentralisierte Kontrolle"], "correct": "b"},
-      {"id": 10, "question": "Was ist ein Ziel des Total Quality Management (TQM)?", "options": ["Minimierung von Mitarbeiterbeteiligung", "Kontinuierliche Qualitätsverbesserung", "Zentralisierte Entscheidungsfindung", "Reduzierung von Prozessen"], "correct": "b"},
-      {"id": 11, "question": "Wie fördert Jensen Huang die Kommunikation bei NVIDIA?", "options": ["Durch bürokratische Berichtspflichten", "Durch offene Diskussionen in flachen Strukturen", "Durch strikte Hierarchien", "Durch zentralisierte Kontrolle"], "correct": "b"},
-      {"id": 12, "question": "Was ist ein Aspekt der ethischen Führung in Organisationen?", "options": ["Optimierung von Fertigungsprozessen", "Förderung von Transparenz und Fairness", "Entwicklung von UML-Diagrammen", "Analyse von Kostenstellen"], "correct": "b"},
-      {"id": 13, "question": "Welches Diagramm wird zur Darstellung von Objektinteraktionen verwendet?", "options": ["Aktivitätsdiagramm", "Sequenzdiagramm", "Klassendiagramm", "Zustandsdiagramm"], "correct": "b"},
-      {"id": 14, "question": "Wie könnte NVIDIA Geschäftsprozessmodellierung einsetzen?", "options": ["Zur Dokumentation von Hierarchien", "Zur Optimierung der KI-Entwicklungsprozesse", "Zur Analyse von Rechtsformen", "Zur Bewertung von Leitungsspannen"], "correct": "b"},
-      {"id": 15, "question": "Welche Methode wird bei der Aufgabenanalyse verwendet?", "options": ["Kostenstellenrechnung", "Zerlegung in Teilaufgaben", "Rechtsformenwahl", "UML-Modellierung"], "correct": "b"},
-      {"id": 16, "question": "Welcher Fertigungstyp ist für Standardprodukte geeignet?", "options": ["Werkstattfertigung", "Fließfertigung", "Aufbauorganisation", "Ablauforganisation"], "correct": "b"},
-      {"id": 17, "question": "Was ist eine enge Leitungsspanne?", "options": ["Viele unterstellte Mitarbeiter pro Führungskraft", "Wenige unterstellte Mitarbeiter pro Führungskraft", "Flache Hierarchie", "Zentralisierte Entscheidungsfindung"], "correct": "b"},
-      {"id": 18, "question": "Wie könnte NVIDIA die numerische Organisationsentwicklung nutzen?", "options": ["Durch zentralisierte Planung", "Durch Maßzahlen-Matrizen für Teamzuordnung", "Durch bürokratische Dokumentation", "Durch isolierte Abteilungen"], "correct": "b"},
-      {"id": 19, "question": "Was bewertet die Maßzahlen-Matrix in der Fallstudie „Trockenblumensträuße“?", "options": ["Kostenstellen", "Nähe von Verrichtungen", "Rechtsformen", "UML-Diagramme"], "correct": "b"},
-      {"id": 20, "question": "Welches Kriterium wird in der Fallstudie „Trockenblumensträuße“ verglichen?", "options": ["Effizienz vs. Kosten", "Versandhandel vs. Ladenverkauf", "Fließfertigung vs. Werkstattfertigung", "Bürokratie vs. Agilität"], "correct": "b"},
-      {"id": 21, "question": "Was fördert den erfolgreichen Wandel in Organisationen?", "options": ["Zentralisierte Kontrolle", "Mitarbeiterbeteiligung", "Minimierung von Kommunikation", "Bürokratische Prozesse"], "correct": "b"},
-      {"id": 22, "question": "Wie hat NVIDIA seine Marktposition durch Wandel gestärkt?", "options": ["Durch strikte Hierarchien", "Durch agile Anpassung an KI-Trends", "Durch zentralisierte Planung", "Durch bürokratische Dokumentation"], "correct": "b"},
-      {"id": 23, "question": "Welche Rechtsform hat beschränkte Haftung und kein Mindestkapital?", "options": ["GmbH", "UG", "OHG", "AG"], "correct": "b"},
-      {"id": 24, "question": "Warum ist NVIDIA als Kapitalgesellschaft organisiert?", "options": ["Um volle Haftung der Gesellschafter zu gewährleisten", "Um Kapital von Investoren zu gewinnen", "Um Hierarchien zu minimieren", "Um Mitarbeiterautonomie zu fördern"], "correct": "b"},
-      {"id": 25, "question": "Was ist ein Ziel der Mitbestimmung?", "options": ["Optimierung von Fertigungsprozessen", "Förderung der Arbeitnehmerrechte", "Zentralisierte Entscheidungsfindung", "Dokumentation von Prozessen"], "correct": "b"},
-      {"id": 26, "question": "Was ist eine Funktion des Betriebsabrechnungsbogens?", "options": ["Visualisierung von Hierarchien", "Verrechnung von Gemeinkosten", "Entwicklung von UML-Diagrammen", "Analyse von Rechtsformen"], "correct": "b"},
-      {"id": 27, "question": "Wie könnte NVIDIA den Betriebsabrechnungsbogen einsetzen?", "options": ["Zur Dokumentation von Hierarchien", "Zur Kostenverteilung in der GPU-Produktion", "Zur Rechtsformenwahl", "Zur Prozessmodellierung"], "correct": "b"},
-      {"id": 28, "question": "Was ist ein Vorteil agiler Methoden?", "options": ["Strenge Hierarchie", "Schnelle Anpassung an Veränderungen", "Zentralisierte Kontrolle", "Minimierung von Kommunikation"], "correct": "b"},
-      {"id": 29, "question": "Wie könnte NVIDIA Scrum einsetzen?", "options": ["Durch zentralisierte Planung", "Durch iterative Softwareentwicklung", "Durch bürokratische Prozesse", "Durch enge Leitungsspannen"], "correct": "b"},
-      {"id": 30, "question": "Was ist ein Ziel der digitalen Transformation?", "options": ["Minimierung von Prozessen", "Effizienzsteigerung durch IT", "Zentralisierte Hierarchie", "Reduzierung von Mitarbeitern"], "correct": "b"},
-      {"id": 31, "question": "Welche Rolle spielt das MVC-Schema in der Softwareentwicklung?", "options": ["Optimierung von Kostenstellen", "Strukturierung von Code", "Analyse von Rechtsformen", "Dokumentation von Hierarchien"], "correct": "b"},
-      {"id": 32, "question": "Wie unterstützt NVIDIAs flache Hierarchie die IT-Nutzung?", "options": ["Durch zentralisierte Kontrolle", "Durch schnelle Entscheidungswege", "Durch bürokratische Prozesse", "Durch isolierte Teams"], "correct": "b"},
-      {"id": 33, "question": "Was ist ein kritischer Erfolgsfaktor der Digitalisierung?", "options": ["Minimierung von Kommunikation", "Qualifizierung der Mitarbeiter", "Zentralisierte Planung", "Bürokratische Dokumentation"], "correct": "b"}
-    ];
+    <script>
+        const questions = [
+            { id: 1, q: "Welche Merkmale treffen auf das Bürokratiemodell nach Weber zu?", opts: ["Feste Regeln", "Spontane Teams", "Hierarchie", "Keine Dokumentation"] },
+            { id: 2, q: "Eigenschaften von Taylors Scientific Management?", opts: ["Arbeitsteilung", "Standardprozesse", "Flache Hierarchie", "Keine Arbeitsteilung"] },
+            { id: 3, q: "Was hilft bei Aufbauorganisation?", opts: ["Stellenbeschreibungen", "Materialflüsse", "Hierarchieebenen", "Informationsflüsse"] },
+            { id: 4, q: "Nvidia CEO hat 60 Direct Reports – was beschreibt das?", opts: ["Flache Hierarchie", "Konventionelle Leitungsspanne", "Breite Leitungsspanne", "Tiefe Hierarchie"] },
+            { id: 5, q: "Warum keine 1:1-Meetings bei Nvidia?", opts: ["Privates Wissen schafft Macht", "Transparenz", "Komplexer Informationsfluss", "Fehlende Zeit"] },
+            { id: 6, q: "Jensen Huang: 'Information ist Macht' – was meint er?", opts: ["Privilegiertes Wissen erzeugt Ungleichheit", "öffentliche Infos fördern Tempo", "Teamfeedback stärken", "Einzelgespräche helfen"] },
+            { id: 7, q: "Welche Prinzipien nutzt Huang bei Feedback?", opts: ["Öffentliches Feedback", "Nur private Kritik", "Fehler sichtbar lernen", "Einzelcoachings"] },
+            { id: 8, q: "Was ist der KVP (kontinuierlicher Verbesserungsprozess)?", opts: ["Einmalig", "Iterativ", "Nur Dokumentation", "Reine Hierarchie"] },
+            { id: 9, q: "Merkmale einer breiten Leitungsspanne?", opts: ["Viele Unterstellte", "Mehr Führungskräfte", "Direkte Kommunikation", "Flache Hierarchie"] },
+            { id: 10, q: "Vorteile flacher Hierarchie bei Nvidia?", opts: ["Transparenz", "Agilität", "Wenig Kontrolle", "Schnelle Entscheidungen"] },
+            { id: 11, q: "Welche Rolle spielt 'Top‑5 Things'-Email bei Nvidia?", opts: ["Infos an CEO", "Bürokratische Pflicht", "Transparenz im Team", "Statusberichte"] },
+            { id: 12, q: "Was beschreibt Aufbauorganisation?", opts: ["Hierarchie", "Funktionale Stellen", "Prozessflüsse", "Materiallogistik"] },
+            { id: 13, q: "Was versteht man unter Ablauforganisation?", opts: ["Workflow", "Hierarchie", "Materialprozess", "Kommunikationsstruktur"] },
+            { id: 14, q: "Worauf setzt Huang bei Führungskultur?", opts: ["Öffentliche Kritik", "Top-down Info", "Transparenz", "Privatführung"] },
+            { id: 15, q: "Was bedeutet breite Leitungsspanne?", opts: ["CEO mit 60 Reports", "Viel Kontrolle", "Flache Struktur", "Enge Struktur"] },
+            { id: 16, q: "Warum vertraut Nvidia auf 'organisiertes Chaos'?", opts: ["Hohe Eigenverantwortung", "Keine Regeln", "Schnelles Handeln", "Kein Urlaub"] },
+            { id: 17, q: "Was versteht man unter Scientific Management?", opts: ["Standardisierung", "Arbeitsteilung", "Ausführung getrennt Planung", "Keine Dokumentation"] },
+            { id: 18, q: "Welche Vorteile hat keine 1:1 Meetings?", opts: ["Gruppe lernt", "Information öffentlich", "Effizienz", "Chefs bleiben fern"] },
+            { id: 19, q: "Welche Nachteile könnte flache Struktur haben?", opts: ["Mangel an Coaching", "Verantwortungsdiffusion", "Schnelle Entscheidungen", "Mehr Transparenz"] },
+            { id: 20, q: "Was sagt Huang zur E-Mail-Kultur?", opts: ["100+ Mails/Tag", "transparenter Austausch", "weniger Bürokratie", "mehr Meetings"] },
+            { id: 21, q: "Warum berichtet Huang direkt mit 60 Reports?", opts: ["Alle hören Feedback", "Vermeidung privater Infos", "Siloabbau"] },
+            { id: 22, q: "Was ist Kritikpunkt an privater Information?", opts: ["Machtungleichheit", "Langsame Entscheidungen", "Team sagt Bescheid", "Transparenz"] },
+            { id: 23, q: "Wie oft bekommt man Feedback bei Nvidia?", opts: ["öffentliche Meetings", "monatliche 1:1", "Top‑5 E‑Mail", "Mitarbeitergespräch"] },
+            { id: 24, q: "Was bedeutet 'Mission is boss' für Nvidia?", opts: ["Ziel über Chef", "Mitarbeiteranreiz", "keine Bürokratie"] },
+            { id: 25, q: "Was kennzeichnet flache Organisation generell?", opts: ["wenige Hierarchieebenen", "breite Kontrolle", "hohe Eigenverantwortung"] },
+            { id: 26, q: "Wofür steht MVC im Skript?", opts: ["Modell‑View‑Controller", "Materiel‑Verbrauchsrechnung", "Hierarchie"] },
+            { id: 27, q: "Was bewirkt breite Leitungsspanne?", opts: ["geringe Führungskraftzahl", "Fließfertigung", "weniger Kontrolle"] },
+            { id: 28, q: "Welcher Prozess fördert Verbesserung?", opts: ["KVP", "Einmaloptimierung", "Hierarchieaufbau"] },
+            { id: 29, q: "Was ist Bürokratiemodell?", opts: ["festgefügte Regeln", "Spontane Gruppen", "Feste Hierarchie"] },
+            { id: 30, q: "Scientific Management nutzt…", opts: ["Fließfertigung", "Massenproduktion", "Teamarbeit"] },
+            { id: 31, q: "Nvidia's rationale für Group Feedback?", opts: ["alle lernen", "kein Informationsprivileg", "schneller Entscheid"] },
+            { id: 32, q: "Was bedeutet 'Information is power' Philosophie?", opts: ["gibt Kontrolle", "alle erfahren Infos", "Plausibilitätsprüfung"] },
+            { id: 33, q: "Warum verzichtet Huang auf private Gespräche?", opts: ["stellt Transparenz her", "spart Zeit", "verhindert Machtspiele"] }
+        ];
 
-    // Lösungen in JSON
-    const solutions = {
-      "1": {"correct": "b", "explanation": "Das Hauptziel der Organisationslehre ist die Gestaltung effizienter Arbeitsteilung (S. 6)."},
-      "2": {"correct": "b", "explanation": "Artteilung betont die Spezialisierung auf unterschiedliche Aufgaben (S. 8)."},
-      "3": {"correct": "b", "explanation": "NVIDIA fördert Transparenz, um Information effizient zu nutzen (Web:23)."},
-      "4": {"correct": "b", "explanation": "Regeltreue ist ein Kernprinzip des Bürokratiemodells (S. 11)."},
-      "5": {"correct": "b", "explanation": "Scientific Management trennt Planung von Ausführung (S. 12)."},
-      "6": {"correct": "b", "explanation": "Flache Hierarchien ermöglichen schnelle Entscheidungen bei NVIDIA (Web:21)."},
-      "7": {"correct": "b", "explanation": "Ablauforganisation definiert Prozessabfolgen (S. 18)."},
-      "8": {"correct": "b", "explanation": "Stablinienorganisation kombiniert Hierarchie und Spezialisierung (S. 20)."},
-      "9": {"correct": "b", "explanation": "NVIDIA nutzt flache Strukturen für Effizienz (Web:21)."},
-      "10": {"correct": "b", "explanation": "TQM zielt auf kontinuierliche Qualitätsverbesserung (S. 35)."},
-      "11": {"correct": "b", "explanation": "Huang fördert offene Kommunikation in flachen Strukturen (Web:20)."},
-      "12": {"correct": "b", "explanation": "Ethische Führung betont Transparenz und Fairness (S. 44)."},
-      "13": {"correct": "b", "explanation": "Sequenzdiagramme zeigen Objektinteraktionen (S. 50)."},
-      "14": {"correct": "b", "explanation": "NVIDIA optimiert KI-Prozesse mit Modellierung (Web:1)."},
-      "15": {"correct": "b", "explanation": "Aufgabenanalyse zerlegt Aufgaben in Teilaufgaben (S. 55)."},
-      "16": {"correct": "b", "explanation": "Fließfertigung ist für Standardprodukte geeignet (S. 59)."},
-      "17": {"correct": "b", "explanation": "Enge Leitungsspanne bedeutet wenige Mitarbeiter pro Führungskraft (S. 71)."},
-      "18": {"correct": "b", "explanation": "NVIDIA könnte Maßzahlen-Matrizen für Teamzuordnung nutzen (S. 81)."},
-      "19": {"correct": "b", "explanation": "Maßzahlen-Matrix bewertet die Nähe von Verrichtungen (S. 83)."},
-      "20": {"correct": "b", "explanation": "Die Fallstudie vergleicht Versandhandel und Ladenverkauf (S. 84)."},
-      "21": {"correct": "b", "explanation": "Mitarbeiterbeteiligung fördert Wandel (S. 86)."},
-      "22": {"correct": "b", "explanation": "NVIDIA hat sich agil an KI-Trends angepasst (Web:21)."},
-      "23": {"correct": "b", "explanation": "Die UG hat beschränkte Haftung ohne Mindestkapital (S. 98)."},
-      "24": {"correct": "b", "explanation": "NVIDIA nutzt die Kapitalgesellschaft für Investorenkapital (Web:2)."},
-      "25": {"correct": "b", "explanation": "Mitbestimmung fördert Arbeitnehmerrechte (S. 100)."},
-      "26": {"correct": "b", "explanation": "Betriebsabrechnungsbogen verrechnet Gemeinkosten (S. 106)."},
-      "27": {"correct": "b", "explanation": "NVIDIA könnte Kosten in der GPU-Produktion verteilen (Web:9)."},
-      "28": {"correct": "b", "explanation": "Agile Methoden ermöglichen schnelle Anpassung (S. 117)."},
-      "29": {"correct": "b", "explanation": "NVIDIA nutzt Scrum für iterative Entwicklung (Web:7)."},
-      "30": {"correct": "b", "explanation": "Digitale Transformation steigert Effizienz durch IT (S. 129)."},
-      "31": {"correct": "b", "explanation": "MVC strukturiert Code in der Softwareentwicklung (S. 147)."},
-      "32": {"correct": "b", "explanation": "Flache Hierarchien fördern schnelle IT-Entscheidungen (Web:23)."},
-      "33": {"correct": "b", "explanation": "Mitarbeiterqualifizierung ist ein Erfolgsfaktor der Digitalisierung (S. 151)."}
-    };
+        const solutions = [
+            { id: 1, corr: ["a", "c"] },
+            { id: 2, corr: ["a", "b"] },
+            { id: 3, corr: ["a", "c"] },
+            { id: 4, corr: ["a", "c"] },
+            { id: 5, corr: ["a", "b", "c"] },
+            { id: 6, corr: ["a", "b"] },
+            { id: 7, corr: ["a", "c"] },
+            { id: 8, corr: ["b"] },
+            { id: 9, corr: ["a", "c", "d"] },
+            { id: 10, corr: ["a", "b", "d"] },
+            { id: 11, corr: ["a", "c", "d"] },
+            { id: 12, corr: ["a", "b"] },
+            { id: 13, corr: ["a", "c", "d"] },
+            { id: 14, corr: ["a", "c"] },
+            { id: 15, corr: ["a", "c"] },
+            { id: 16, corr: ["a", "c"] },
+            { id: 17, corr: ["a", "b"] },
+            { id: 18, corr: ["a", "b", "c"] },
+            { id: 19, corr: ["a", "b"] },
+            { id: 20, corr: ["a", "b"] },
+            { id: 21, corr: ["a", "b", "c"] },
+            { id: 22, corr: ["a", "b"] },
+            { id: 23, corr: ["a", "c"] },
+            { id: 24, corr: ["a"] },
+            { id: 25, corr: ["a", "c"] },
+            { id: 26, corr: ["a"] },
+            { id: 27, corr: ["a", "c"] },
+            { id: 28, corr: ["a"] },
+            { id: 29, corr: ["a", "c"] },
+            { id: 30, corr: ["b"] },
+            { id: 31, corr: ["a", "b", "c"] },
+            { id: 32, corr: ["a", "b"] },
+            { id: 33, corr: ["a", "b", "c"] }
+        ];
 
-    // Fragen rendern
-    const questionsDiv = document.getElementById('questions');
-    questions.forEach(q => {
-      const div = document.createElement('div');
-      div.className = 'question';
-      div.innerHTML = `<h4>${q.id}. ${q.question}</h4>`;
-      q.options.forEach((opt, idx) => {
-        const optDiv = document.createElement('div');
-        optDiv.className = 'option';
-        optDiv.innerHTML = `
-          <label>
-            <input type="radio" name="q${q.id}" value="${String.fromCharCode(97 + idx)}">
-            ${opt}
-          </label>
-        `;
-        div.appendChild(optDiv);
-      });
-      questionsDiv.appendChild(div);
-    });
+        // Eine Map für schnelleren Zugriff auf Lösungen nach ID
+        const solutionsMap = new Map(solutions.map(sol => [sol.id, sol.corr]));
 
-    document.getElementById('quizForm').addEventListener('submit', e => {
-      e.preventDefault();
-      const answers = {};
-      questions.forEach(q => {
-        const selected = document.querySelector(`input[name="q${q.id}"]:checked`);
-        answers[q.id] = selected ? selected.value : null;
-      });
-      displayResults(answers);
-    });
+        const questionsDiv = document.getElementById("questions");
+        questions.forEach(q => {
+            const div = document.createElement("div");
+            div.className = "question";
+            div.innerHTML = `<h4>${q.id}. ${q.q}</h4>`;
+            q.opts.forEach((opt, idx) => {
+                const labelChar = String.fromCharCode(97 + idx); // 'a', 'b', 'c', ...
+                const optDiv = document.createElement("div");
+                optDiv.className = "option";
+                optDiv.innerHTML = `<label><input type="checkbox" name="q${q.id}" value="${labelChar}">${opt}</label>`;
+                div.appendChild(optDiv);
+            });
+            questionsDiv.appendChild(div);
+        });
 
-    function displayResults(answers) {
-      const resultsDiv = document.getElementById('results');
-      resultsDiv.innerHTML = '<h2>Ergebnisse</h2>';
-      let score = 0;
+        document.getElementById("quizForm").addEventListener("submit", e => {
+            e.preventDefault();
+            const resultsDiv = document.getElementById("results");
+            resultsDiv.innerHTML = "<h2>Ergebnisse</h2>";
+            let score = 0;
 
-      questions.forEach(q => {
-        const userAnswer = answers[q.id];
-        const correctAnswer = solutions[q.id].correct;
-        const explanation = solutions[q.id].explanation;
-        const resultDiv = document.createElement('div');
+            questions.forEach(q => {
+                // Ausgewählte Antworten des Benutzers
+                const selectedOptions = Array.from(document.querySelectorAll(`input[name="q${q.id}"]:checked`))
+                                            .map(input => input.value);
+                
+                // Korrekte Antworten aus der solutionsMap abrufen
+                const correctAnswers = solutionsMap.get(q.id);
 
-        if (userAnswer === correctAnswer) {
-          resultDiv.className = 'correct';
-          score++;
-        } else {
-          resultDiv.className = 'incorrect';
-        }
+                // Prüfen, ob die ausgewählten Antworten exakt den korrekten Antworten entsprechen
+                const isCorrect = selectedOptions.length === correctAnswers.length && 
+                                  selectedOptions.every(val => correctAnswers.includes(val));
 
-        resultDiv.innerHTML = `
-          <strong>Frage ${q.id}:</strong> ${q.question}<br>
-          <strong>Ihre Antwort:</strong> ${userAnswer ? q.options[userAnswer.charCodeAt(0) - 97] : 'Keine'}<br>
-          <strong>Korrekte Antwort:</strong> ${q.options[correctAnswer.charCodeAt(0) - 97]}<br>
-          <strong>Erklärung:</strong> ${explanation}<br><br>
-        `;
+                const questionResultDiv = document.createElement("div");
+                questionResultDiv.className = isCorrect ? "correct" : "incorrect";
+                
+                // Anzeigen der ausgewählten Antworten (als Text)
+                const userAnswersText = selectedOptions.length > 0
+                    ? selectedOptions.map(val => q.opts[val.charCodeAt(0) - 97]).join(", ")
+                    : "Keine";
 
-        resultsDiv.appendChild(resultDiv);
-      });
+                // Anzeigen der korrekten Antworten (als Text)
+                const correctAnswersText = correctAnswers.map(val => q.opts[val.charCodeAt(0) - 97]).join(", ");
 
-      resultsDiv.insertAdjacentHTML('beforeend', `<h3>Gesamtpunktzahl: ${score}/${questions.length}</h3>`);
-    }
-  </script>
+                questionResultDiv.innerHTML = `
+                    <strong>Frage ${q.id}:</strong> ${q.q}<br>
+                    <strong>Ihre Antworten:</strong> ${userAnswersText}<br>
+                    <strong>Korrekte Antwort(en):</strong> ${correctAnswersText}<br><br>
+                `;
+                
+                if (isCorrect) {
+                    score++;
+                }
+                resultsDiv.appendChild(questionResultDiv);
+            });
+
+            resultsDiv.insertAdjacentHTML("beforeend", `<h3>Gesamtpunktzahl: ${score}/${questions.length}</h3>`);
+        });
+    </script>
 </body>
 </html>
