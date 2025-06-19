@@ -5,83 +5,56 @@
     <title>Organisationslehre MC-Test</title>
     <style>
         body {
-        font-family: 'Segoe UI', sans-serif;
-        background: #f9f9f9;
-        color: #333;
-        margin: 0;
-        padding: 20px;
+            font-family: "Segoe UI", sans-serif;
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 20px;
+            background: #f5f7fa;
+            color: #333;
         }
-    
         h1 {
-        text-align: center;
-        margin-bottom: 30px;
-        color: #2c3e50;
+            text-align: center;
+            color: #004080;
         }
-    
         .question {
-        background: #fff;
-        border-radius: 8px;
-        padding: 15px 20px;
-        margin-bottom: 20px;
-        box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+            background: white;
+            border: 1px solid #ddd;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
         }
-    
-        .question h4 {
-        margin: 0 0 10px;
-        color: #34495e;
-        }
-    
-        .option {
-        margin: 5px 0 5px 15px;
-        }
-    
+        .option { margin: 5px 0; }
+        .option label { cursor: pointer; }
+        .option input { margin-right: 8px; }
         #submit {
-        display: block;
-        margin: 30px auto;
-        background-color: #3498db;
-        color: white;
-        font-size: 18px;
-        border: none;
-        padding: 12px 30px;
-        border-radius: 6px;
-        cursor: pointer;
+            display: block;
+            margin: 30px auto;
+            padding: 12px 30px;
+            font-size: 16px;
+            background-color: #004080;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
         }
-    
         #submit:hover {
-        background-color: #2980b9;
+            background-color: #003366; /* Dunklere Variante des #004080 */
         }
-    
         #results {
-        margin-top: 40px;
+            margin-top: 30px;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
         }
-    
         .correct {
-        background: #e9fce9;
-        border-left: 5px solid #2ecc71;
-        padding: 10px;
-        margin-bottom: 15px;
-        border-radius: 5px;
+            color: green;
         }
-    
         .incorrect {
-        background: #fdecea;
-        border-left: 5px solid #e74c3c;
-        padding: 10px;
-        margin-bottom: 15px;
-        border-radius: 5px;
-        }
-    
-        .correct strong,
-        .incorrect strong {
-        color: #2c3e50;
-        }
-    
-        h2, h3 {
-        text-align: center;
-        color: #2c3e50;
+            color: red;
         }
     </style>
-    </head>
+</head>
 <body>
     <h1>Organisationslehre MC-Test</h1>
     <form id="quizForm">
@@ -91,7 +64,7 @@
     <div id="results"></div>
 
     <script>
-        // Fragen in JSON
+        // Fragen in JSON (vom zweiten Snippet übernommen)
         const questions = [
             {"id": 1, "question": "Was versteht man unter Organisation im Sinne der Betriebswirtschaft?", "options": ["Die Entwicklung von Produkten und Dienstleistungen", "Planung und Durchführung von Arbeitsteilung", "Die Steuerung von Finanzflüssen", "Die Einhaltung von Gesetzen"], "correct": "b"},
             {"id": 2, "question": "Welche Form der Arbeitsteilung beschreibt mehrere Personen, die parallel ähnliche Aufgaben ausführen?", "options": ["Artteilung", "Mengenteilung", "Aufbauorganisation", "Ablauforganisation"], "correct": "b"},
@@ -128,7 +101,7 @@
             {"id": 33, "question": "Welcher Erfolgsfaktor der digitalen Transformation betont die Rolle der Mitarbeiter?", "options": ["Technologie", "Prozesse", "Menschen", "Hierarchie"], "correct": "c"}
         ];
 
-        // Lösungen in JSON
+        // Lösungen in JSON (vom zweiten Snippet übernommen)
         const solutions = {
             "1": {"correct": "b", "explanation": "Organisation ist die Planung und Durchführung von Arbeitsteilung (S. 6)."},
             "2": {"correct": "b", "explanation": "Mengenteilung beschreibt parallele Aufgaben (S. 8)."},

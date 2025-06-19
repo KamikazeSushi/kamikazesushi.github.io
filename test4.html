@@ -5,81 +5,64 @@
     <title>Organisationslehre MC-Test</title>
     <style>
         body {
-        font-family: 'Segoe UI', sans-serif;
-        background: #f9f9f9;
-        color: #333;
-        margin: 0;
-        padding: 20px;
+            font-family: "Segoe UI", sans-serif;
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 20px;
+            background: #f5f7fa; /* Hintergrundfarbe vom ersten Snippet */
+            color: #333;
         }
-    
         h1 {
-        text-align: center;
-        margin-bottom: 30px;
-        color: #2c3e50;
+            text-align: center;
+            color: #004080; /* Farbe vom ersten Snippet */
         }
-    
         .question {
-        background: #fff;
-        border-radius: 8px;
-        padding: 15px 20px;
-        margin-bottom: 20px;
-        box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+            background: white;
+            border: 1px solid #ddd; /* Rand vom ersten Snippet */
+            padding: 20px; /* Padding vom ersten Snippet */
+            margin-bottom: 20px;
+            border-radius: 8px; /* Border-Radius vom ersten Snippet */
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05); /* Schatten vom ersten Snippet */
         }
-    
-        .question h4 {
-        margin: 0 0 10px;
-        color: #34495e;
-        }
-    
-        .option {
-        margin: 5px 0 5px 15px;
-        }
-    
+        /* Da die h4 im .question-Container standardmäßig gut aussieht, 
+           und der erste Stil keine spezielle h4-Regel hatte, 
+           wird die Regel aus dem zweiten Snippet hier nicht übernommen. */
+        .option { margin: 5px 0; }
+        .option label { cursor: pointer; }
+        .option input { margin-right: 8px; } /* Behält den Abstand für Checkboxen bei */
         #submit {
-        display: block;
-        margin: 30px auto;
-        background-color: #3498db;
-        color: white;
-        font-size: 18px;
-        border: none;
-        padding: 12px 30px;
-        border-radius: 6px;
-        cursor: pointer;
+            display: block;
+            margin: 30px auto;
+            padding: 12px 30px;
+            font-size: 16px; /* Font-Size vom ersten Snippet */
+            background-color: #004080; /* Farbe vom ersten Snippet */
+            color: white;
+            border: none;
+            border-radius: 6px; /* Border-Radius vom ersten Snippet */
+            cursor: pointer;
         }
-    
         #submit:hover {
-        background-color: #2980b9;
+            background-color: #003366; /* Dunklere Variante für Hover, passend zum ersten Stil */
         }
-    
         #results {
-        margin-top: 40px;
+            margin-top: 30px; /* Margin-Top vom ersten Snippet */
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
         }
-    
+        /* Farben und Rahmen für Ergebnisse aus dem ERSTEN Snippet */
         .correct {
-        background: #e9fce9;
-        border-left: 5px solid #2ecc71;
-        padding: 10px;
-        margin-bottom: 15px;
-        border-radius: 5px;
+            color: green; /* Textfarbe grün */
+            /* Keine zusätzlichen Hintergrund/Border-Styles, da du den Stil des ersten behalten wolltest */
         }
-    
         .incorrect {
-        background: #fdecea;
-        border-left: 5px solid #e74c3c;
-        padding: 10px;
-        margin-bottom: 15px;
-        border-radius: 5px;
+            color: red; /* Textfarbe rot */
+            /* Keine zusätzlichen Hintergrund/Border-Styles */
         }
-    
-        .correct strong,
-        .incorrect strong {
-        color: #2c3e50;
-        }
-    
-        h2, h3 {
-        text-align: center;
-        color: #2c3e50;
-        }
+        /* .correct strong, .incorrect strong wird nicht übernommen, 
+           da dies dem ersten Stil widerspricht. */
+        /* h2, h3 aus dem zweiten Snippet wird nicht übernommen, 
+           da diese im ersten Snippet keine spezifische Formatierung hatten. */
     </style>
 </head>
 <body>
@@ -91,7 +74,7 @@
   <div id="results"></div>
 
   <script>
-    // Fragen in JSON
+    // Fragen in JSON (Multiple Choice, vom zuletzt bereitgestellten Snippet übernommen)
     const questions = [
       {"id": 1, "question": "Welche Aspekte gehören zur Definition von Organisation in der Betriebswirtschaft?", "options": ["Finanzflusssteuerung", "Planung der Arbeitsteilung", "Durchführung der Arbeitsteilung", "Produktentwicklung"], "correct": ["b", "c"]},
       {"id": 2, "question": "Welche Formen der Arbeitsteilung sind im Skript beschrieben?", "options": ["Mengenteilung", "Artteilung", "Fließfertigung", "Koordinationsteilung"], "correct": ["a", "b"]},
@@ -128,7 +111,7 @@
       {"id": 33, "question": "Welche Aspekte der Organisationsentwicklung sind im Skript betont?", "options": ["Profitmaximierung", "Prozessoptimierung", "Mitarbeiterentwicklung", "Minimierte Dokumentation"], "correct": ["b", "c"]}
     ];
 
-    // Lösungen in JSON
+    // Lösungen in JSON (vom zuletzt bereitgestellten Snippet übernommen)
     const solutions = {
       "1": {"correct": ["b", "c"], "explanation": "Organisation umfasst Planung und Durchführung der Arbeitsteilung (S. 6)."},
       "2": {"correct": ["a", "b"], "explanation": "Mengenteilung und Artteilung sind Formen der Arbeitsteilung (S. 8)."},
@@ -207,8 +190,9 @@
         const resultDiv = document.createElement('div');
 
         // Prüfen, ob die ausgewählten Antworten exakt mit den korrekten übereinstimmen
-        const isCorrect = userAnswer.length === correctAnswer.length && 
-                         userAnswer.every(ans => correctAnswer.includes(ans)) && 
+        // Beide Arrays müssen die gleiche Länge haben und dieselben Elemente enthalten
+        const isCorrect = userAnswer.length === correctAnswer.length &&
+                         userAnswer.every(ans => correctAnswer.includes(ans)) &&
                          correctAnswer.every(ans => userAnswer.includes(ans));
 
         if (isCorrect) {
