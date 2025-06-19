@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Organisationslehre MC-Test</title>
+    <style>
+        body {
+        font-family: 'Segoe UI', sans-serif;
+        background: #f9f9f9;
+        color: #333;
+        margin: 0;
+        padding: 20px;
+        }
+    
+        h1 {
+        text-align: center;
+        margin-bottom: 30px;
+        color: #2c3e50;
+        }
+    
+        .question {
+        background: #fff;
+        border-radius: 8px;
+        padding: 15px 20px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+        }
+    
+        .question h4 {
+        margin: 0 0 10px;
+        color: #34495e;
+        }
+    
+        .option {
+        margin: 5px 0 5px 15px;
+        }
+    
+        #submit {
+        display: block;
+        margin: 30px auto;
+        background-color: #3498db;
+        color: white;
+        font-size: 18px;
+        border: none;
+        padding: 12px 30px;
+        border-radius: 6px;
+        cursor: pointer;
+        }
+    
+        #submit:hover {
+        background-color: #2980b9;
+        }
+    
+        #results {
+        margin-top: 40px;
+        }
+    
+        .correct {
+        background: #e9fce9;
+        border-left: 5px solid #2ecc71;
+        padding: 10px;
+        margin-bottom: 15px;
+        border-radius: 5px;
+        }
+    
+        .incorrect {
+        background: #fdecea;
+        border-left: 5px solid #e74c3c;
+        padding: 10px;
+        margin-bottom: 15px;
+        border-radius: 5px;
+        }
+    
+        .correct strong,
+        .incorrect strong {
+        color: #2c3e50;
+        }
+    
+        h2, h3 {
+        text-align: center;
+        color: #2c3e50;
+        }
+    </style>
+</head>
+<body>
+  <h1>Organisationslehre MC-Test</h1>
+  <form id="quizForm">
+    <div id="questions"></div>
+    <button type="submit" id="submit">Abgeben</button>
+  </form>
+  <div id="results"></div>
+
+  <script>
+    // Fragen in JSON
+    const questions = [
+      {"id": 1, "question": "Welche Aspekte gehören zur Definition von Organisation in der Betriebswirtschaft?", "options": ["Finanzflusssteuerung", "Planung der Arbeitsteilung", "Durchführung der Arbeitsteilung", "Produktentwicklung"], "correct": ["b", "c"]},
+      {"id": 2, "question": "Welche Formen der Arbeitsteilung sind im Skript beschrieben?", "options": ["Mengenteilung", "Artteilung", "Fließfertigung", "Koordinationsteilung"], "correct": ["a", "b"]},
+      {"id": 3, "question": "Welche Merkmale kennzeichnen das Bürokratiemodell nach Weber?", "options": ["Flache Hierarchien", "Feste Regeln", "Dokumentierte Entscheidungen", "Hohe Flexibilität"], "correct": ["b", "c"]},
+      {"id": 4, "question": "Was unterscheidet Scientific Management nach Taylor von anderen Ansätzen?", "options": ["Fokus auf Mitarbeiterautonomie", "Trennung von Planung und Ausführung", "Effizienz in der Massenproduktion", "Minimierung von Hierarchien"], "correct": ["b", "c"]},
+      {"id": 5, "question": "Welche Elemente definiert die Aufbauorganisation?", "options": ["Zeitliche Prozessabfolge", "Hierarchische Strukturen", "Unterstellungsverhältnisse", "Kostenstellenanalyse"], "correct": ["b", "c"]},
+      {"id": 6, "question": "Welche Vorteile bietet die Stablinienorganisation?", "options": ["Doppelte Berichtspflichten", "Klare Hierarchie", "Fachliche Unterstützung durch Stäbe", "Minimierte Koordination"], "correct": ["b", "c"]},
+      {"id": 7, "question": "Welche Risiken birgt eine Matrixorganisation?", "options": ["Klare Verantwortlichkeiten", "Konflikte durch doppelte Berichtspflichten", "Hoher Koordinationsaufwand", "Geringe Flexibilität"], "correct": ["b", "c"]},
+      {"id": 8, "question": "Welche Prinzipien gehören zum Kontinuierlichen Verbesserungsprozess (KVP)?", "options": ["Einmalige Optimierung", "Iterative Prozessverbesserung", "Mitarbeiterbeteiligung", "Zentralisierte Kontrolle"], "correct": ["b", "c"]},
+      {"id": 9, "question": "Welche Aspekte der ethischen Führung sind im Skript betont?", "options": ["Profitmaximierung", "Transparenz", "Fairness", "Hierarchische Kontrolle"], "correct": ["b", "c"]},
+      {"id": 10, "question": "Welche Ziele verfolgt Total Quality Management (TQM)?", "options": ["Minimierung von Mitarbeiterinput", "Kundenorientierung", "Qualitätsverbesserung", "Reduzierung von Prozessen"], "correct": ["b", "c"]},
+      {"id": 11, "question": "Welche UML-Diagramme sind für die Prozessmodellierung geeignet?", "options": ["Klassendiagramm", "Aktivitätsdiagramm", "Sequenzdiagramm", "Komponentendiagramm"], "correct": ["b", "c"]},
+      {"id": 12, "question": "Welche Schritte sind bei der Aufgabenanalyse entscheidend?", "options": ["Kostenstellenrechnung", "Zerlegung in Teilaufgaben", "Erkennung von Abhängigkeiten", "Rechtsformenwahl"], "correct": ["b", "c"]},
+      {"id": 13, "question": "Welche Fertigungstypen sind im Skript beschrieben?", "options": ["Werkstattfertigung", "Fließfertigung", "Matrixfertigung", "Projektfertigung"], "correct": ["a", "b"]},
+      {"id": 14, "question": "Welche Faktoren beeinflussen die Wahl der Leitungsspanne?", "options": ["Komplexität der Aufgaben", "Kostenstellen", "Qualifikation der Mitarbeiter", "Rechtsformen"], "correct": ["a", "c"]},
+      {"id": 15, "question": "Welche Kriterien werden in der Maßzahlen-Matrix bewertet?", "options": ["Hierarchieebenen", "Nähe von Verrichtungen", "Kompetenz der Teams", "Finanzflüsse"], "correct": ["b", "c"]},
+      {"id": 16, "question": "Welche Aspekte werden in der Fallstudie „Trockenblumensträuße“ analysiert?", "options": ["Kostenstellen", "Versandhandel vs. Ladenverkauf", "Aufgabenverteilung", "Rechtsformen"], "correct": ["b", "c"]},
+      {"id": 17, "question": "Welche Herausforderungen treten beim Organisationswandel auf?", "options": ["Standardisierte Prozesse", "Mitarbeiterwiderstand", "Fehlende Kommunikation", "Geringe Dokumentation"], "correct": ["b", "c"]},
+      {"id": 18, "question": "Welche Modelle beschreiben den Organisationswandel?", "options": ["Bürokratiemodell", "Lewins Unfreeze-Change-Refreeze", "Kotters 8-Stufen-Modell", "Scientific Management"], "correct": ["b", "c"]},
+      {"id": 19, "question": "Welche Rechtsformen haben beschränkte Haftung?", "options": ["OHG", "GmbH", "AG", "GbR"], "correct": ["b", "c"]},
+      {"id": 20, "question": "Welche Vorteile bietet die AG im Vergleich zur GmbH?", "options": ["Geringere Dokumentation", "Bessere Kapitalbeschaffung", "Höhere Flexibilität am Kapitalmarkt", "Minimierte Hierarchie"], "correct": ["b", "c"]},
+      {"id": 21, "question": "Welche Funktionen hat die Mitbestimmung?", "options": ["Zentralisierte Kontrolle", "Förderung der Arbeitnehmerrechte", "Einfluss durch Betriebsrat", "Kostenoptimierung"], "correct": ["b", "c"]},
+      {"id": 22, "question": "Welche Informationen liefert der Betriebsabrechnungsbogen?", "options": ["Hierarchiediagramme", "Kostenverteilung", "Leistungszuordnung", "Rechtsformenanalyse"], "correct": ["b", "c"]},
+      {"id": 23, "question": "Welche Prinzipien charakterisieren agile Methoden?", "options": ["Strenge Hierarchie", "Iterative Prozesse", "Teamautonomie", "Zentralisierte Planung"], "correct": ["b", "c"]},
+      {"id": 24, "question": "Welche Vorteile bietet Scrum in der Organisationssteuerung?", "options": ["Feste Hierarchien", "Flexibilität durch Sprints", "Transparenz durch Daily Stand-ups", "Minimierte Kommunikation"], "correct": ["b", "c"]},
+      {"id": 25, "question": "Welche Risiken birgt die Einführung agiler Methoden?", "options": ["Geringe Flexibilität", "Koordinationsaufwand", "Kulturkollisionen", "Standardisierte Prozesse"], "correct": ["b", "c"]},
+      {"id": 26, "question": "Welche Technologien unterstützen die Digitalisierung?", "options": ["Manuelle Prozesse", "Cloud-Computing", "Big Data Analytics", "Bürokratiesoftware"], "correct": ["b", "c"]},
+      {"id": 27, "question": "Welche Komponenten gehören zum MVC-Schema?", "options": ["Kostenstellen", "Model", "View", "Hierarchiediagramme"], "correct": ["b", "c"]},
+      {"id": 28, "question": "Welche Erfolgsfaktoren sind für die Digitalisierung entscheidend?", "options": ["Zentralisierte Kontrolle", "Datengüte", "Mitarbeiterqualifizierung", "Minimierte IT-Investitionen"], "correct": ["b", "c"]},
+      {"id": 29, "question": "Welche Tools unterstützen die Prozessautomatisierung?", "options": ["UML-Diagramme", "Robotic Process Automation (RPA)", "Workflow-Management-Systeme", "Betriebsabrechnungsbogen"], "correct": ["b", "c"]},
+      {"id": 30, "question": "Welche Herausforderungen treten bei der Digitalisierung auf?", "options": ["Geringe IT-Abhängigkeit", "Datenintegration", "Kulturkollisionen", "Standardisierte Prozesse"], "correct": ["b", "c"]},
+      {"id": 31, "question": "Welche Merkmale kennzeichnen die Ablauforganisation?", "options": ["Hierarchische Strukturen", "Zeitliche Prozessabfolge", "Räumliche Prozessgestaltung", "Kostenstellenanalyse"], "correct": ["b", "c"]},
+      {"id": 32, "question": "Welche Faktoren fördern den erfolgreichen Wandel?", "options": ["Zentralisierte Kontrolle", "Mitarbeiterbeteiligung", "Klare Kommunikation", "Bürokratische Prozesse"], "correct": ["b", "c"]},
+      {"id": 33, "question": "Welche Aspekte der Organisationsentwicklung sind im Skript betont?", "options": ["Profitmaximierung", "Prozessoptimierung", "Mitarbeiterentwicklung", "Minimierte Dokumentation"], "correct": ["b", "c"]}
+    ];
+
+    // Lösungen in JSON
+    const solutions = {
+      "1": {"correct": ["b", "c"], "explanation": "Organisation umfasst Planung und Durchführung der Arbeitsteilung (S. 6)."},
+      "2": {"correct": ["a", "b"], "explanation": "Mengenteilung und Artteilung sind Formen der Arbeitsteilung (S. 8)."},
+      "3": {"correct": ["b", "c"], "explanation": "Feste Regeln und dokumentierte Entscheidungen sind Merkmale des Bürokratiemodells (S. 11)."},
+      "4": {"correct": ["b", "c"], "explanation": "Scientific Management betont Planung/Ausführung-Trennung und Effizienz (S. 12)."},
+      "5": {"correct": ["b", "c"], "explanation": "Aufbauorganisation definiert Hierarchien und Unterstellungsverhältnisse (S. 16)."},
+      "6": {"correct": ["b", "c"], "explanation": "Stablinienorganisation bietet klare Hierarchie und fachliche Unterstützung (S. 20)."},
+      "7": {"correct": ["b", "c"], "explanation": "Matrixorganisationen haben doppelte Berichtspflichten und hohen Koordinationsaufwand (S. 22)."},
+      "8": {"correct": ["b", "c"], "explanation": "KVP basiert auf iterativer Verbesserung und Mitarbeiterbeteiligung (S. 33)."},
+      "9": {"correct": ["b", "c"], "explanation": "Ethische Führung betont Transparenz und Fairness (S. 44)."},
+      "10": {"correct": ["b", "c"], "explanation": "TQM zielt auf Kundenorientierung und Qualitätsverbesserung (S. 35)."},
+      "11": {"correct": ["b", "c"], "explanation": "Aktivitäts- und Sequenzdiagramme sind für Prozessmodellierung geeignet (S. 49)."},
+      "12": {"correct": ["b", "c"], "explanation": "Aufgabenanalyse zerlegt Aufgaben und erkennt Abhängigkeiten (S. 55)."},
+      "13": {"correct": ["a", "b"], "explanation": "Werkstatt- und Fließfertigung sind im Skript beschrieben (S. 59)."},
+      "14": {"correct": ["a", "c"], "explanation": "Leitungsspanne hängt von Aufgabenkomplexität und Mitarbeiterqualifikation ab (S. 71)."},
+      "15": {"correct": ["b", "c"], "explanation": "Maßzahlen-Matrix bewertet Nähe und Kompetenz (S. 81)."},
+      "16": {"correct": ["b", "c"], "explanation": "Die Fallstudie analysiert Versandhandel/Ladenverkauf und Aufgabenverteilung (S. 84)."},
+      "17": {"correct": ["b", "c"], "explanation": "Mitarbeiterwiderstand und fehlende Kommunikation sind Herausforderungen (S. 86)."},
+      "18": {"correct": ["b", "c"], "explanation": "Lewins und Kotters Modelle beschreiben den Wandel (S. 87)."},
+      "19": {"correct": ["b", "c"], "explanation": "GmbH und AG haben beschränkte Haftung (S. 97)."},
+      "20": {"correct": ["b", "c"], "explanation": "AG bietet bessere Kapitalbeschaffung und Flexibilität (S. 98)."},
+      "21": {"correct": ["b", "c"], "explanation": "Mitbestimmung fördert Arbeitnehmerrechte und Betriebsrat-Einfluss (S. 100)."},
+      "22": {"correct": ["b", "c"], "explanation": "Betriebsabrechnungsbogen liefert Kosten- und Leistungszuordnung (S. 106)."},
+      "23": {"correct": ["b", "c"], "explanation": "Agile Methoden basieren auf iterativen Prozessen und Teamautonomie (S. 117)."},
+      "24": {"correct": ["b", "c"], "explanation": "Scrum bietet Flexibilität und Transparenz (S. 117)."},
+      "25": {"correct": ["b", "c"], "explanation": "Agile Methoden bergen Koordinationsaufwand und Kulturkollisionen (S. 117)."},
+      "26": {"correct": ["b", "c"], "explanation": "Cloud-Computing und Big Data unterstützen Digitalisierung (S. 129)."},
+      "27": {"correct": ["b", "c"], "explanation": "MVC umfasst Model und View (S. 147)."},
+      "28": {"correct": ["b", "c"], "explanation": "Datengüte und Mitarbeiterqualifizierung sind Erfolgsfaktoren (S. 151)."},
+      "29": {"correct": ["b", "c"], "explanation": "RPA und Workflow-Systeme unterstützen Automatisierung (S. 132)."},
+      "30": {"correct": ["b", "c"], "explanation": "Datenintegration und Kulturkollisionen sind Herausforderungen (S. 130)."},
+      "31": {"correct": ["b", "c"], "explanation": "Ablauforganisation umfasst zeitliche und räumliche Prozessgestaltung (S. 18)."},
+      "32": {"correct": ["b", "c"], "explanation": "Mitarbeiterbeteiligung und Kommunikation fördern Wandel (S. 86)."},
+      "33": {"correct": ["b", "c"], "explanation": "Organisationsentwicklung betont Prozessoptimierung und Mitarbeiterentwicklung (S. 86)."}
+    };
+
+    // Fragen rendern
+    const questionsDiv = document.getElementById('questions');
+    questions.forEach(q => {
+      const div = document.createElement('div');
+      div.className = 'question';
+      div.innerHTML = `<h4>${q.id}. ${q.question}</h4>`;
+      q.options.forEach((opt, idx) => {
+        const optDiv = document.createElement('div');
+        optDiv.className = 'option';
+        optDiv.innerHTML = `
+          <label>
+            <input type="checkbox" name="q${q.id}" value="${String.fromCharCode(97 + idx)}">
+            ${opt}
+          </label>
+        `;
+        div.appendChild(optDiv);
+      });
+      questionsDiv.appendChild(div);
+    });
+
+    document.getElementById('quizForm').addEventListener('submit', e => {
+      e.preventDefault();
+      const answers = {};
+      questions.forEach(q => {
+        const selected = Array.from(document.querySelectorAll(`input[name="q${q.id}"]:checked`)).map(input => input.value);
+        answers[q.id] = selected.length > 0 ? selected : null;
+      });
+      displayResults(answers);
+    });
+
+    function displayResults(answers) {
+      const resultsDiv = document.getElementById('results');
+      resultsDiv.innerHTML = '<h2>Ergebnisse</h2>';
+      let score = 0;
+
+      questions.forEach(q => {
+        const userAnswer = answers[q.id] || [];
+        const correctAnswer = solutions[q.id].correct;
+        const explanation = solutions[q.id].explanation;
+        const resultDiv = document.createElement('div');
+
+        // Prüfen, ob die ausgewählten Antworten exakt mit den korrekten übereinstimmen
+        const isCorrect = userAnswer.length === correctAnswer.length && 
+                         userAnswer.every(ans => correctAnswer.includes(ans)) && 
+                         correctAnswer.every(ans => userAnswer.includes(ans));
+
+        if (isCorrect) {
+          resultDiv.className = 'correct';
+          score++;
+        } else {
+          resultDiv.className = 'incorrect';
+        }
+
+        resultDiv.innerHTML = `
+          <strong>Frage ${q.id}:</strong> ${q.question}<br>
+          <strong>Ihre Antwort:</strong> ${userAnswer.length ? userAnswer.map(a => q.options[a.charCodeAt(0) - 97]).join(', ') : 'Keine'}<br>
+          <strong>Korrekte Antwort:</strong> ${correctAnswer.map(a => q.options[a.charCodeAt(0) - 97]).join(', ')}<br>
+          <strong>Erklärung:</strong> ${explanation}<br><br>
+        `;
+
+        resultsDiv.appendChild(resultDiv);
+      });
+
+      resultsDiv.insertAdjacentHTML('beforeend', `<h3>Gesamtpunktzahl: ${score}/${questions.length}</h3>`);
+    }
+  </script>
+</body>
+</html>
