@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Organisationslehre MC-Test</title>
+    <style>
+        body {
+            font-family: "Segoe UI", sans-serif;
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 20px;
+            background: #f5f7fa;
+            color: #333;
+        }
+        h1 {
+            text-align: center;
+            color: #004080;
+        }
+        .question {
+            background: white;
+            border: 1px solid #ddd;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .option { margin: 5px 0; }
+        .option label { cursor: pointer; }
+        .option input { margin-right: 8px; }
+        #submit {
+            display: block;
+            margin: 30px auto;
+            padding: 12px 30px;
+            font-size: 16px;
+            background-color: #004080;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        #results {
+            margin-top: 30px;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        .correct { color: green; }
+        .incorrect { color: red; }
+    </style>
+</head>
+<body>
+    <h1>Organisationslehre MC-Test (33 Fragen)</h1>
+    <form id="quizForm">
+        <div id="questions"></div>
+        <button type="submit" id="submit">Abgeben</button>
+    </form>
+    <div id="results"></div>
+
+    <script>
+        const questions = [
+            { id: 1, question: "Ein Unternehmen zerlegt die Produktion in spezialisierte Abteilungen wie Design und Montage. Welche Formen der Arbeitsteilung sind hier dominant?", options: ["Mengenteilung", "Artteilung", "Fließfertigung", "Koordinationsteilung"], correct: ["b"] },
+            { id: 2, question: "Welche Merkmale des Bürokratiemodells nach Weber würden in einer Behörde mit standardisierten Verfahren und klarer Hierarchie sichtbar?", options: ["Feste Regeln", "Flache Hierarchie", "Dokumentierte Entscheidungen", "Spontane Teams"], correct: ["a", "c"] },
+            { id: 3, question: "Welche Prinzipien von Taylors Scientific Management werden in einer Fabrik mit Zeitstudien und standardisierten Arbeitsabläufen angewendet?", options: ["Trennung Planung/Ausführung", "Mitarbeiterautonomie", "Effizienz in Massenproduktion", "Fließband"], correct: ["a", "c"] },
+            { id: 4, question: "Ein Unternehmen hat 5 Hierarchieebenen und 6 Unterstellte pro Führungskraft. Welche Merkmale der Aufbauorganisation sind hier erkennbar?", options: ["Breite Leitungsspanne", "Tiefe Hierarchie", "Flache Hierarchie", "Unterstellungsverhältnisse"], correct: ["b", "d"] },
+            { id: 5, question: "In einer Matrixorganisation klagt ein Mitarbeiter über widersprüchliche Anweisungen. Welche Risiken sind hier relevant?", options: ["Doppelte Berichtspflichten", "Mangelnde Hierarchie", "Hoher Koordinationsaufwand", "Geringe Flexibilität"], correct: ["a", "c"] },
+            { id: 6, question: "Welche Vorteile bietet eine Stablinienorganisation in einem Unternehmen mit komplexen Projekten?", options: ["Klare Hierarchie", "Fachliche Unterstützung", "Doppelte Berichtspflichten", "Minimierte Koordination"], correct: ["a", "b"] },
+            { id: 7, question: "Ein Unternehmen führt regelmäßige Feedbackschleifen mit Mitarbeitern ein, um Prozesse zu optimieren. Welche Prinzipien des KVP sind hier erkennbar?", options: ["Einmalige Optimierung", "Iterative Verbesserung", "Mitarbeiterbeteiligung", "Zentralisierte Kontrolle"], correct: ["b", "c"] },
+            { id: 8, question: "Welche Ziele verfolgt Total Quality Management in einem kundenorientierten Unternehmen?", options: ["Kostenminimierung", "Kundenorientierung", "Qualitätsverbesserung", "Hierarchische Kontrolle"], correct: ["b", "c"] },
+            { id: 9, question: "Ein Unternehmen modelliert den Bestellprozess mit UML-Diagrammen. Welche Diagramme sind dafür geeignet?", options: ["Klassendiagramm", "Aktivitätsdiagramm", "Sequenzdiagramm", "Zustandsdiagramm"], correct: ["b", "c"] },
+            { id: 10, question: "Welche Schritte sind bei der Aufgabenanalyse entscheidend, um einen neuen Produktionsprozess zu planen?", options: ["Kostenstellenrechnung", "Zerlegung in Teilaufgaben", "Erkennung von Abhängigkeiten", "Rechtsformenwahl"], correct: ["b", "c"] },
+            { id: 11, question: "Ein Unternehmen stellt Serienprodukte her. Welche Fertigungstypen sind dafür typisch?", options: ["Werkstattfertigung", "Fließfertigung", "Projektfertigung", "Einzelfertigung"], correct: ["b"] },
+            { id: 12, question: "Welche Faktoren beeinflussen die Wahl einer breiten Leitungsspanne in einem agilen Startup?", options: ["Komplexität der Aufgaben", "Mitarbeiterqualifikation", "Kostenstellen", "Rechtsformen"], correct: ["a", "b"] },
+            { id: 13, question: "In der Fallstudie 'Trockenblumensträuße' wird der Versandhandel mit dem Ladenverkauf verglichen. Welche Kriterien sind dabei entscheidend?", options: ["Kostenstellen", "Kundenreichweite", "Aufgabenverteilung", "Hierarchieebenen"], correct: ["b", "c"] },
+            { id: 14, question: "Welche Herausforderungen treten bei der Einführung einer neuen Organisationsstruktur auf?", options: ["Standardisierte Prozesse", "Mitarbeiterwiderstand", "Fehlende Kommunikation", "Geringe Dokumentation"], correct: ["b", "c"] },
+            { id: 15, question: "Welche Modelle beschreiben den Organisationswandel in einem Unternehmen, das eine neue Strategie einführt?", options: ["Bürokratiemodell", "Lewins Unfreeze-Change-Refreeze", "Kotters 8-Stufen-Modell", "Scientific Management"], correct: ["b", "c"] },
+            { id: 16, question: "Welche Rechtsformen bieten beschränkte Haftung für ein mittelständisches Unternehmen?", options: ["OHG", "GmbH", "AG", "GbR"], correct: ["b", "c"] },
+            { id: 17, question: "Welche Vorteile bietet die AG gegenüber der GmbH für ein wachsendes Unternehmen?", options: ["Geringere Dokumentation", "Bessere Kapitalbeschaffung", "Höhere Flexibilität am Kapitalmarkt", "Minimierte Hierarchie"], correct: ["b", "c"] },
+            { id: 18, question: "Welche Funktionen erfüllt die Mitbestimmung in einem Unternehmen mit Betriebsrat?", options: ["Zentralisierte Kontrolle", "Förderung der Arbeitnehmerrechte", "Einfluss durch Betriebsrat", "Kostenoptimierung"], correct: ["b", "c"] },
+            { id: 19, question: "Welche Informationen liefert der Betriebsabrechnungsbogen in einem Produktionsunternehmen?", options: ["Hierarchiediagramme", "Kostenverteilung", "Leistungszuordnung", "Rechtsformenanalyse"], correct: ["b", "c"] },
+            { id: 20, question: "Welche Prinzipien charakterisieren Scrum in einem agilen Projektteam?", options: ["Strenge Hierarchie", "Iterative Sprints", "Täglicher Stand-up", "Zentralisierte Planung"], correct: ["b", "c"] },
+            { id: 21, question: "Welche Risiken birgt die Einführung agiler Methoden in einem traditionellen Unternehmen?", options: ["Geringe Flexibilität", "Koordinationsaufwand", "Kulturkollisionen", "Standardprozesse"], correct: ["b", "c"] },
+            { id: 22, question: "Welche Technologien unterstützen die digitale Transformation in der Prozessoptimierung?", options: ["Manuelle Prozesse", "Cloud-Computing", "Big Data Analytics", "Bürokratiesoftware"], correct: ["b", "c"] },
+            { id: 23, question: "Welche Komponenten gehören zum MVC-Schema in einer Webanwendung?", options: ["Kostenstellen", "Model", "View", "Controller"], correct: ["b", "c", "d"] },
+            { id: 24, question: "Welche Erfolgsfaktoren sind für die digitale Transformation entscheidend?", options: ["Zentralisierte Kontrolle", "Datengüte", "Mitarbeiterqualifizierung", "Minimierte IT-Investitionen"], correct: ["b", "c"] },
+            { id: 25, question: "Welche Tools unterstützen die Prozessautomatisierung in einem Unternehmen?", options: ["UML-Diagramme", "Robotic Process Automation (RPA)", "Workflow-Management-Systeme", "Betriebsabrechnungsbogen"], correct: ["b", "c"] },
+            { id: 26, question: "Welche Herausforderungen treten bei der digitalen Transformation auf?", options: ["Geringe IT-Abhängigkeit", "Datenintegration", "Kulturkollisionen", "Standardisierte Prozesse"], correct: ["b", "c"] },
+            { id: 27, question: "Welche Merkmale kennzeichnen die Ablauforganisation in einem Logistikunternehmen?", options: ["Hierarchische Strukturen", "Zeitliche Prozessabfolge", "Räumliche Prozessgestaltung", "Kostenstellenanalyse"], correct: ["b", "c"] },
+            { id: 28, question: "Welche Faktoren fördern einen erfolgreichen Organisationswandel?", options: ["Zentralisierte Kontrolle", "Mitarbeiterbeteiligung", "Klare Kommunikation", "Bürokratische Prozesse"], correct: ["b", "c"] },
+            { id: 29, question: "Welche Aspekte der ethischen Führung sind in einem Unternehmen mit transparenter Entscheidungsfindung erkennbar?", options: ["Profitmaximierung", "Transparenz", "Fairness", "Hierarchische Kontrolle"], correct: ["b", "c"] },
+            { id: 30, question: "Welche Kriterien werden in der Maßzahlen-Matrix zur Optimierung der Aufgabenverteilung bewertet?", options: ["Hierarchieebenen", "Nähe von Verrichtungen", "Kompetenz der Teams", "Finanzflüsse"], correct: ["b", "c"] },
+            { id: 31, question: "Ein Unternehmen führt Kanban ein, um Prozesse zu optimieren. Welche Prinzipien sind hier relevant?", options: ["Feste Sprints", "Kontinuierlicher Fluss", "Visualisierung durch Boards", "Zentralisierte Planung"], correct: ["b", "c"] },
+            { id: 32, question: "Welche Unterschiede bestehen zwischen KVP und TQM in einem Unternehmen, das Prozesse optimiert?", options: ["KVP ist iterativ", "TQM ist kundenorientiert", "KVP ist zentralisiert", "TQM ist einmalig"], correct: ["a", "b"] },
+            { id: 33, question: "Welche Aspekte der Organisationsentwicklung sind in einem Unternehmen mit Fokus auf Prozesse und Mitarbeiter erkennbar?", options: ["Profitmaximierung", "Prozessoptimierung", "Mitarbeiterentwicklung", "Minimierte Dokumentation"], correct: ["b", "c"] }
+        ];
+
+        const solutions = {
+            "1": { correct: ["b"], explanation: "Die Zerlegung in spezialisierte Abteilungen wie Design und Montage ist Artteilung, da unterschiedliche Aufgaben verteilt werden (S. 8)." },
+            "2": { correct: ["a", "c"], explanation: "Das Bürokratiemodell nach Weber zeichnet sich durch feste Regeln und dokumentierte Entscheidungen aus, nicht durch flache Hierarchien oder spontane Teams (S. 11)." },
+            "3": { correct: ["a", "c"], explanation: "Scientific Management nutzt Zeitstudien und standardisierte Abläufe, um Planung von Ausführung zu trennen und Effizienz zu fördern (S. 12)." },
+            "4": { correct: ["b", "d"], explanation: "5 Hierarchieebenen deuten auf eine tiefe Hierarchie, und 6 Unterstellte pro Führungskraft zeigen Unterstellungsverhältnisse (S. 16, 71)." },
+            "5": { correct: ["a", "c"], explanation: "Matrixorganisationen führen zu doppelten Berichtspflichten und hohem Koordinationsaufwand, was Konflikte verursacht (S. 22)." },
+            "6": { correct: ["a", "b"], explanation: "Stablinienorganisation bietet klare Hierarchie und fachliche Unterstützung durch Stäbe, keine doppelten Berichtspflichten (S. 20)." },
+            "7": { correct: ["b", "c"], explanation: "KVP basiert auf iterativer Verbesserung und Mitarbeiterbeteiligung, nicht auf einmaliger Optimierung (S. 33)." },
+            "8": { correct: ["b", "c"], explanation: "TQM zielt auf Kundenorientierung und Qualitätsverbesserung, nicht auf Kostenminimierung oder Hierarchie (S. 35)." },
+            "9": { correct: ["b", "c"], explanation: "Aktivitätsdiagramme zeigen Prozessabläufe, Sequenzdiagramme Interaktionen, beide sind für Bestellprozesse geeignet (S. 49)." },
+            "10": { correct: ["b", "c"], explanation: "Aufgabenanalyse zerlegt Aufgaben und erkennt Abhängigkeiten, nicht Kostenstellen oder Rechtsformen (S. 55)." },
+            "11": { correct: ["b"], explanation: "Fließfertigung ist für Serienprodukte geeignet, da sie standardisiert und effizient ist (S. 59)." },
+            "12": { correct: ["a", "b"], explanation: "Breite Leitungsspannen hängen von Aufgabenkomplexität und Mitarbeiterqualifikation ab, nicht von Kostenstellen (S. 71)." },
+            "13": { correct: ["b", "c"], explanation: "Die Fallstudie analysiert Kundenreichweite und Aufgabenverteilung beim Vergleich Versandhandel vs. Ladenverkauf (S. 83)." },
+            "14": { correct: ["b", "c"], explanation: "Mitarbeiterwiderstand und fehlende Kommunikation sind typische Herausforderungen beim Wandel (S. 86)." },
+            "15": { correct: ["b", "c"], explanation: "Lewins und Kotters Modelle beschreiben Wandel, nicht Bürokratie oder Scientific Management (S. 87–88)." },
+            "16": { correct: ["b", "c"], explanation: "GmbH und AG bieten beschränkte Haftung, OHG und GbR nicht (S. 97–98)." },
+            "17": { correct: ["b", "c"], explanation: "AG bietet bessere Kapitalbeschaffung und Flexibilität am Kapitalmarkt im Vergleich zur GmbH (S. 97)." },
+            "18": { correct: ["b", "c"], explanation: "Mitbestimmung fördert Arbeitnehmerrechte und Betriebsrat-Einfluss, nicht Kostenoptimierung (S. 100)." },
+            "19": { correct: ["b", "c"], explanation: "Betriebsabrechnungsbogen liefert Kostenverteilung und Leistungszuordnung, keine Hierarchiediagramme (S. 106)." },
+            "20": { correct: ["b", "c"], explanation: "Scrum basiert auf iterativen Sprints und täglichen Stand-ups, nicht auf Hierarchie (S. 117)." },
+            "21": { correct: ["b", "c"], explanation: "Agile Methoden bergen Koordinationsaufwand und Kulturkollisionen in traditionellen Firmen (S. 117)." },
+            "22": { correct: ["b", "c"], explanation: "Cloud-Computing und Big Data Analytics unterstützen digitale Transformation, nicht manuelle Prozesse (S. 129)." },
+            "23": { correct: ["b", "c", "d"], explanation: "MVC umfasst Model, View und Controller, nicht Kostenstellen (S. 147)." },
+            "24": { correct: ["b", "c"], explanation: "Datengüte und Mitarbeiterqualifizierung sind Erfolgsfaktoren der Digitalisierung (S. 151)." },
+            "25": { correct: ["b", "c"], explanation: "RPA und Workflow-Systeme unterstützen Prozessautomatisierung, nicht UML oder Betriebsabrechnungsbogen (S. 132)." },
+            "26": { correct: ["b", "c"], explanation: "Datenintegration und Kulturkollisionen sind Herausforderungen der Digitalisierung (S. 130)." },
+            "27": { correct: ["b", "c"], explanation: "Ablauforganisation umfasst zeitliche und räumliche Prozessgestaltung, nicht Hierarchie (S. 18)." },
+            "28": { correct: ["b", "c"], explanation: "Mitarbeiterbeteiligung und klare Kommunikation fördern Wandel, nicht Bürokratie (S. 86)." },
+            "29": { correct: ["b", "c"], explanation: "Ethische Führung zeigt sich in Transparenz und Fairness, nicht in Profitmaximierung (S. 44)." },
+            "30": { correct: ["b", "c"], explanation: "Maßzahlen-Matrix bewertet Nähe von Verrichtungen und Kompetenz, nicht Hierarchieebenen (S. 81)." },
+            "31": { correct: ["b", "c"], explanation: "Kanban basiert auf kontinuierlichem Fluss und Visualisierung, nicht auf Sprints (S. 118)." },
+            "32": { correct: ["a", "b"], explanation: "KVP ist iterativ, TQM kundenorientiert; KVP ist nicht zentralisiert, TQM nicht einmalig (S. 33, 35)." },
+            "33": { correct: ["b", "c"], explanation: "Organisationsentwicklung betont Prozessoptimierung und Mitarbeiterentwicklung, nicht Profitmaximierung (S. 86)." }
+        };
+
+        const questionsDiv = document.getElementById("questions");
+        questions.forEach(q => {
+            const div = document.createElement("div");
+            div.className = "question";
+            div.innerHTML = `<h4>${q.id}. ${q.question}</h4>`;
+            q.options.forEach((opt, idx) => {
+                const labelChar = String.fromCharCode(97 + idx);
+                const optDiv = document.createElement("div");
+                optDiv.className = "option";
+                optDiv.innerHTML = `<label><input type="checkbox" name="q${q.id}" value="${labelChar}">${opt}</label>`;
+                div.appendChild(optDiv);
+            });
+            questionsDiv.appendChild(div);
+        });
+
+        document.getElementById("quizForm").addEventListener("submit", e => {
+            e.preventDefault();
+            const resultsDiv = document.getElementById("results");
+            resultsDiv.innerHTML = "<h2>Ergebnisse</h2>";
+            let score = 0;
+
+            questions.forEach(q => {
+                const selectedOptions = Array.from(document.querySelectorAll(`input[name="q${q.id}"]:checked`)).map(input => input.value);
+                const correctAnswers = solutions[q.id].correct;
+                const explanation = solutions[q.id].explanation;
+                const isCorrect = selectedOptions.length === correctAnswers.length && selectedOptions.every(val => correctAnswers.includes(val));
+                const questionResultDiv = document.createElement("div");
+                questionResultDiv.className = isCorrect ? "correct" : "incorrect";
+                const userAnswersText = selectedOptions.length > 0 ? selectedOptions.map(val => q.options[val.charCodeAt(0) - 97]).join(", ") : "Keine";
+                const correctAnswersText = correctAnswers.map(val => q.options[val.charCodeAt(0) - 97]).join(", ");
+                questionResultDiv.innerHTML = `
+                    <strong>Frage ${q.id}:</strong> ${q.question}<br>
+                    <strong>Ihre Antworten:</strong> ${userAnswersText}<br>
+                    <strong>Korrekte Antwort(en):</strong> ${correctAnswersText}<br>
+                    <strong>Erklärung:</strong> ${explanation}<br><br>
+                `;
+                if (isCorrect) score++;
+                resultsDiv.appendChild(questionResultDiv);
+            });
+
+            resultsDiv.insertAdjacentHTML("beforeend", `<h3>Gesamtpunktzahl: ${score}/${questions.length}</h3>`);
+        });
+    </script>
+</body>
+</html>
