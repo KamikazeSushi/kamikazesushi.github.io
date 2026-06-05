@@ -1,50 +1,114 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>IO</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page Discontinued</title>
   <style>
+    :root {
+      --bg: #f8f9fa;
+      --text: #333333;
+      --accent: #4a90e2;
+      --accent-hover: #357abd;
+      --card-bg: #ffffff;
+    }
+
+    /* Simple, clean reset */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
     body {
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #f4f6f8;
-      color: #2c3e50;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
       text-align: center;
-      padding: 50px;
+      background: var(--card-bg);
+      padding: 40px 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+      max-width: 500px;
+      width: 100%;
     }
 
     h1 {
-      font-size: 32px;
-      margin-bottom: 40px;
+      font-size: 2rem;
+      margin-bottom: 15px;
+      color: #e056fd; /* A subtle, modern pop color */
     }
 
-    .button-container {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      flex-wrap: wrap;
+    p {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      margin-bottom: 25px;
+      color: #666;
     }
 
-    .test-button {
-      background-color: #3498db;
-      color: white;
-      border: none;
-      padding: 15px 30px;
-      font-size: 18px;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
+    .btn {
+      display: inline-block;
+      background-color: var(--accent);
+      color: #ffffff;
+      text-decoration: none;
+      padding: 12px 24px;
+      border-radius: 6px;
+      font-weight: bold;
+      transition: background-color 0.2s ease, transform 0.1s ease;
     }
 
-    .test-button:hover {
-      background-color: #2980b9;
+    .btn:hover {
+      background-color: var(--accent-hover);
+    }
+
+    .btn:active {
+      transform: scale(0.98);
+    }
+
+    .countdown {
+      margin-top: 30px;
+      font-size: 0.9rem;
+      color: #999;
     }
   </style>
 </head>
 <body>
-  <h1>Links</h1>
-  <p>(main page)</p>
-  <div class="button-container">
-    <button class="test-button" onclick="location.href='https://kamikazesushi.github.io/portfolio/'">Portfolio</button>
+
+  <div class="container">
+    <h1>Page Discontinued</h1>
+    <p>This project has been moved or discontinued. Please visit my main portfolio to see my current works.</p>
+    
+    <a href="https://kamikazesushi.github.io/portfolio" class="btn">Go to Portfolio</a>
+
+    <div class="countdown">
+      Redirecting automatically in <span id="timer">5</span> seconds...
+    </div>
   </div>
+
+  <script>
+    const targetURL = "https://kamikazesushi.github.io/portfolio";
+    let timeLeft = 5;
+    const timerElement = document.getElementById('timer');
+
+    // Countdown logic
+    const countdownInterval = setInterval(() => {
+      timeLeft--;
+      timerElement.textContent = timeLeft;
+
+      if (timeLeft <= 0) {
+        clearInterval(countdownInterval);
+        window.location.href = targetURL; // Triggers the redirect
+      }
+    }, 1000);
+  </script>
+
 </body>
 </html>
