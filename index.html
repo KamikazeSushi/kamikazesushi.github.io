@@ -3,17 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Page Discontinued</title>
+  <title>Project Under Construction</title>
   <style>
     :root {
-      --bg: #f8f9fa;
-      --text: #333333;
-      --accent: #4a90e2;
-      --accent-hover: #357abd;
+      --bg: #fafafa;
+      --text: #2d3436;
+      --accent: #6c5ce7;
+      --accent-hover: #54a0ff;
       --card-bg: #ffffff;
+      --ink-muted: #636e72;
     }
-
-    /* Simple, clean reset */
+    
     * {
       box-sizing: border-box;
       margin: 0;
@@ -34,24 +34,34 @@
     .container {
       text-align: center;
       background: var(--card-bg);
-      padding: 40px 30px;
-      border-radius: 12px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-      max-width: 500px;
+      padding: 50px 40px;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+      max-width: 520px;
       width: 100%;
+      border: 1px solid rgba(0, 0, 0, 0.02);
+    }
+
+    .icon-wrapper {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      display: inline-block;
+      animation: pulse 2s infinite ease-in-out;
     }
 
     h1 {
-      font-size: 2rem;
+      font-size: 1.8rem;
+      font-weight: 700;
       margin-bottom: 15px;
-      color: #e056fd; /* A subtle, modern pop color */
+      color: var(--text);
+      letter-spacing: -0.5px;
     }
 
     p {
-      font-size: 1.1rem;
+      font-size: 1.05rem;
       line-height: 1.6;
-      margin-bottom: 25px;
-      color: #666;
+      margin-bottom: 30px;
+      color: var(--ink-muted);
     }
 
     .btn {
@@ -59,14 +69,16 @@
       background-color: var(--accent);
       color: #ffffff;
       text-decoration: none;
-      padding: 12px 24px;
-      border-radius: 6px;
-      font-weight: bold;
-      transition: background-color 0.2s ease, transform 0.1s ease;
+      padding: 14px 28px;
+      border-radius: 8px;
+      font-weight: 600;
+      transition: background-color 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease;
+      box-shadow: 0 4px 12px rgba(108, 92, 231, 0.2);
     }
 
     .btn:hover {
       background-color: var(--accent-hover);
+      box-shadow: 0 4px 12px rgba(84, 160, 255, 0.2);
     }
 
     .btn:active {
@@ -74,22 +86,35 @@
     }
 
     .countdown {
-      margin-top: 30px;
-      font-size: 0.9rem;
-      color: #999;
+      margin-top: 35px;
+      font-size: 0.85rem;
+      color: #b2bec3;
+      font-weight: 500;
+    }
+
+    #timer {
+      font-weight: bold;
+      color: var(--accent);
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.08); }
+      100% { transform: scale(1); }
     }
   </style>
 </head>
 <body>
 
   <div class="container">
-    <h1>Page Discontinued</h1>
-    <p>This project has been moved or discontinued. Please visit my main portfolio to see my current works.</p>
+    <div class="icon-wrapper">🛠️</div>
+    <h1>Project Under Construction</h1>
+    <p>This specific page is currently inactive while the feature is being built. However, my main portfolio is live! Let's take you there to see my other works.</p>
     
-    <a href="https://kamikazesushi.github.io/portfolio" class="btn">Go to Portfolio</a>
+    <a href="https://kamikazesushi.github.io/portfolio" class="btn">Explore Portfolio</a>
 
     <div class="countdown">
-      Redirecting automatically in <span id="timer">5</span> seconds...
+      Redirecting to the portfolio in <span id="timer">5</span> seconds...
     </div>
   </div>
 
@@ -105,7 +130,7 @@
 
       if (timeLeft <= 0) {
         clearInterval(countdownInterval);
-        window.location.href = targetURL; // Triggers the redirect
+        window.location.href = targetURL; // Triggers the automatic redirect
       }
     }, 1000);
   </script>
